@@ -107,3 +107,20 @@ bool reservedJS(char* str)
     }
     return false;
 }
+
+bool reservedC(char* str)
+{
+    char* C[] = {"auto","else","long","switch","break","enum","register","typedef","case",
+    "extern","return","union","char","float","short","unsigned","const","for","signed"
+    ,"void","continue","goto","sizeof","volatile","default","if","static","while","do",
+    "int","struct","double","bool","true","false"};
+
+    for(register int i=0;i<35;i++)
+    {
+        if(strcmp(C[i],str)==0)
+        {
+            return true;
+        }
+    }
+    return false;
+}

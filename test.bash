@@ -6,4 +6,4 @@ bash build.bash
 
 cd test
 
-./minfile main.js
+./minfile test.js

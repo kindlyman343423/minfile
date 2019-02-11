@@ -22,6 +22,9 @@ int main(int argc,char *argv[])
             bool js=false;                                                              //initial value of js is false
             bool css = false;                                                           //initial value of css is false
             bool html=false;                                                            //initial value of html is false
+            bool c = false;
+            bool cpp = false;
+            bool java = false;
 
             //setting the boolean according to file extensions
             int len = strlen(argv[1]);
@@ -38,6 +41,10 @@ int main(int argc,char *argv[])
             {
                 html=true;
             }
+            else if(argv[1][len-1]=='c')
+            {
+                c=true;
+            }
 
             FILE *ptr;
             ptr = fopen(argv[1],"r");                                                   //reading file for conversion
@@ -50,7 +57,10 @@ int main(int argc,char *argv[])
             /**
              * create new file extension
              * 
-             * main.js -> main.min.js
+             * test.html    ->  test.min.html
+             * test.css     ->  test.min.css
+             * test.js      ->  test.min.js
+             * test.c       ->  test.min.c
              **/
             int newlen = len+5;                                                         //increased length because of min
             int i=0;
@@ -95,11 +105,19 @@ int main(int argc,char *argv[])
                     if(flag==true)
                     {
                         str[l]='\0';
-                        if(reservedJS(str) && ch==' ')          //if js reserved word found
+                        if(js && reservedJS(str) && ch==' ')          //if js reserved word found
+                        {
+                            fputc(ch,copy);
+                        }
+                        else if(c && reservedC(str) && ch==' ')     //if c reserved words are found
                         {
                             fputc(ch,copy);
                         }
                         else if(html && ch==' ')             //print space only for js and html files
+                        {
+                            fputc(ch,copy);
+                        }
+                        else if(ch==' ' && !css)                    //if other space found
                         {
                             fputc(ch,copy);
                         }

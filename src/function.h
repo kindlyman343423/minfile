@@ -10,3 +10,4 @@ int sha(char*);
 /*RESERVED FUNCTIONS*/
 
 bool reservedJS(char*);
+bool reservedC(char*);
