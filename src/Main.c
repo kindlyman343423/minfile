@@ -2,27 +2,64 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+
+/**
+ * this function will tell whether given char is wildcard or not
+ * for discarding char in filename
+ * 
+ * @param ch for char
+ * @return bool
+ **/
 bool wildcard(char ch)
 {
     switch(ch)
     {
-        case '_':
+        case '!':
+        case '\"':
+        case '#':
+        case '$':
+        case '%':
+        case '&':
+        case '(':
+        case ')':
+        case '*':
         case '+':
+        case '\'':
+        case ',':
         case '-':
         case '/':
+        case ':':
         case ';':
-        case '^':
-        case '$':
-        case '#':
+        case '<':
+        case '=':
+        case '>':
+        case '?':
         case '@':
+        case '[':
+        case '\\':
+        case ']':
+        case '^':
+        case '_':
+        case '`':
+        case '{':
+        case '|':
+        case '}':
+        case '~':
             return true;
         default:
             return false;
     }
 }
+
+/**
+ * it will check wheter the string is valid or not
+ * 
+ * @param string
+ * @return bool
+ **/
 bool checkValid(char *str)
 {
-    int count=0;
+    int count=0;                    //counting the number of dots in the filename
     int i=0;
     while(str[i]!='\0')
     {
@@ -36,20 +73,33 @@ bool checkValid(char *str)
         }
         i++;
     }
-    if(count==1)
+    if(count==1)                    //valid for only one dot in string
     {
         return true;
     }
     return false;
 }
+
+int hash(char *str)
+{
+    int result=0;
+    for(register int i=0;i<strlen(str);i++)
+    {
+        result= result + (int)str[i];
+    }
+    return result;
+}
+
+bool reserved(char* str)
+{
+
+}
+/**
+ * this is the main program
+ **/
 int main(int argc,char *argv[])
 {
-    // printf("%d",argc);
-    // for(register int i=0;i<argc;i++)
-    // {
-    //     printf("%s",argv[i]);
-    // }
-    if(argc==1 || argc>2)
+    if(argc==1 || argc>2)                                   //check arguments
     {
         printf("Invalid arguments !!!\n");
         printf("Format should be: ./minfile filename\n");
@@ -58,7 +108,10 @@ int main(int argc,char *argv[])
     {
         //check for valid file
         printf("Valid filename: %d\n",checkValid(argv[1]));
-        if(checkValid(argv[1]))
+        
+        //checking the hash value
+        exit(0);
+        if(checkValid(argv[1]))                             //if valid filename found
         {
             FILE *ptr;
             ptr = fopen(argv[1],"r");
@@ -100,16 +153,26 @@ int main(int argc,char *argv[])
             
             FILE *copy;
             copy = fopen(newfile,"w");
-            
+            bool flag=false;
+
             while(!feof(ptr))
             {
                 char ch = fgetc(ptr);
-                if(ch=='\n' || ch=='\t' || ch==EOF)
+                if(ch==' ' || ch=='\n' || ch=='\t' || ch==EOF)
                 {
-                    //do nothing
+                    if(flag==true)
+                    {
+                        if(ch==' ')
+                            fputc(ch,copy);    
+                        flag=false;
+                    }
                 }
                 else
                 {
+                    if(flag==false)
+                    {
+                        flag=true;
+                    }
                     fputc(ch,copy);
                 }
             }
