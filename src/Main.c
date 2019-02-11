@@ -80,6 +80,7 @@ bool checkValid(char *str)
     return false;
 }
 
+//0-999 hashes
 int hash(char *str)
 {
     int result=0;
@@ -87,13 +88,24 @@ int hash(char *str)
     {
         result= result + (int)str[i];
     }
-    return result;
+    
+    return result%1000;
 }
 
 bool reserved(char* str)
 {
+    //better efficiency is needed here
+    //may be binary search tree for string searching
+    
+    //js reserved words
+    char* arr[] = {"let","const","var","for","if","else","switch","case","default"};
 
+    for(int i=0;i<9;i++)
+    {
+        printf("%d\n",hash(arr[i]));
+    }
 }
+
 /**
  * this is the main program
  **/
@@ -110,6 +122,7 @@ int main(int argc,char *argv[])
         printf("Valid filename: %d\n",checkValid(argv[1]));
         
         //checking the hash value
+        reserved("hello");
         exit(0);
         if(checkValid(argv[1]))                             //if valid filename found
         {
