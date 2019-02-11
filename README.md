@@ -13,18 +13,6 @@ It is a cli application to generate min file size easily.
 * Running bash scripts
 * Compiling and running c programs
 
-## USAGE
-
-Run the binary in case of linux as
-
-```bash
-./minfile filename.css
-```
-
-You can see new file of name `filename.min.css`. Open that file and see the output.
-
-**Please copy this binary on same location as that of your file which you want to convert**
-
 ## BUILD
 
 ### LINUX
@@ -36,6 +24,18 @@ bash build.bash
 ```
 
 Now you have fresh binary in bin folder for your distro
+
+## USAGE
+
+Run the binary in case of linux as
+
+```bash
+./minfile filename.css
+```
+
+You can see new file of name `filename.min.css`. Open that file and see the output.
+
+**Please copy this binary on same location as that of your file which you want to convert**
 
 ## FILETYPE SUPPORT
 
