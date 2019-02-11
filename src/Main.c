@@ -1,110 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-
-/**
- * this function will tell whether given char is wildcard or not
- * for discarding char in filename
- * 
- * @param ch for char
- * @return bool
- **/
-bool wildcard(char ch)
-{
-    switch(ch)
-    {
-        case '!':
-        case '\"':
-        case '#':
-        case '$':
-        case '%':
-        case '&':
-        case '(':
-        case ')':
-        case '*':
-        case '+':
-        case '\'':
-        case ',':
-        case '-':
-        case '/':
-        case ':':
-        case ';':
-        case '<':
-        case '=':
-        case '>':
-        case '?':
-        case '@':
-        case '[':
-        case '\\':
-        case ']':
-        case '^':
-        case '_':
-        case '`':
-        case '{':
-        case '|':
-        case '}':
-        case '~':
-            return true;
-        default:
-            return false;
-    }
-}
-
-/**
- * it will check wheter the string is valid or not
- * 
- * @param string
- * @return bool
- **/
-bool checkValid(char *str)
-{
-    int count=0;                    //counting the number of dots in the filename
-    int i=0;
-    while(str[i]!='\0')
-    {
-        if(wildcard(str[i]))
-        {
-            return false;
-        }
-        if(str[i]=='.')
-        {
-            count++;
-        }
-        i++;
-    }
-    if(count==1)                    //valid for only one dot in string
-    {
-        return true;
-    }
-    return false;
-}
-
-//0-999 hashes
-int hash(char *str)
-{
-    int result=0;
-    for(register int i=0;i<strlen(str);i++)
-    {
-        result= result + (int)str[i];
-    }
-    
-    return result%1000;
-}
-
-bool reserved(char* str)
-{
-    //better efficiency is needed here
-    //may be binary search tree for string searching
-    
-    //js reserved words
-    char* arr[] = {"let","const","var","for","if","else","switch","case","default"};
-
-    for(int i=0;i<9;i++)
-    {
-        printf("%d\n",hash(arr[i]));
-    }
-}
+#include "function.c"
 
 /**
  * this is the main program
@@ -120,25 +14,48 @@ int main(int argc,char *argv[])
     {
         //check for valid file
         printf("Valid filename: %d\n",checkValid(argv[1]));
-        
-        //checking the hash value
-        reserved("hello");
-        exit(0);
-        if(checkValid(argv[1]))                             //if valid filename found
+       
+
+        if(checkValid(argv[1]))                                                         //if valid filename found
         {
+            //booleans for file extensions
+            bool js=false;                                                              //initial value of js is false
+            bool css = false;                                                           //initial value of css is false
+            bool html=false;                                                            //initial value of html is false
+
+            //setting the boolean according to file extensions
+            int len = strlen(argv[1]);
+            
+            if(argv[1][len-1]=='s' && argv[1][len-2]=='j')                              //checking for js
+            {
+                js=true;
+            }
+            else if(argv[1][len-1]=='s' && argv[1][len-2]=='s' && argv[1][len-3]=='c')  //checking for css
+            {
+                css=true;
+            }
+            else if(argv[1][len-1]=='l' && argv[1][len-2]=='m' && argv[1][len-3]=='t' && argv[1][len-4]=='h') //checking for html
+            {
+                html=true;
+            }
+
             FILE *ptr;
-            ptr = fopen(argv[1],"r");
+            ptr = fopen(argv[1],"r");                                                   //reading file for conversion
             if(ptr==NULL)
             {
                 printf("ERROR: No file found\n");
                 exit(1);
             }
-            //create new file extension
-            //main.js -> main.min.js
-            int newlen = strlen(argv[1])+5;
+            
+            /**
+             * create new file extension
+             * 
+             * main.js -> main.min.js
+             **/
+            int newlen = len+5;                                                         //increased length because of min
             int i=0;
             int j=0;
-            char *newfile = (char*)malloc(sizeof(char)*newlen);
+            char *newfile = (char*)malloc(sizeof(char)*newlen);                         //heap memory for new file creation
             
             while(argv[1][i]!='\0')
             {
@@ -166,7 +83,9 @@ int main(int argc,char *argv[])
             
             FILE *copy;
             copy = fopen(newfile,"w");
-            bool flag=false;
+            bool flag=false;                                    //boolean for parsing
+            char str[100];
+            int l=0;
 
             while(!feof(ptr))
             {
@@ -175,8 +94,16 @@ int main(int argc,char *argv[])
                 {
                     if(flag==true)
                     {
-                        if(ch==' ')
-                            fputc(ch,copy);    
+                        str[l]='\0';
+                        if(reservedJS(str) && ch==' ')          //if js reserved word found
+                        {
+                            fputc(ch,copy);
+                        }
+                        else if(html && ch==' ')             //print space only for js and html files
+                        {
+                            fputc(ch,copy);
+                        }
+                        l=0;
                         flag=false;
                     }
                 }
@@ -187,6 +114,9 @@ int main(int argc,char *argv[])
                         flag=true;
                     }
                     fputc(ch,copy);
+
+                    str[l] = ch;
+                    l++;
                 }
             }
             
