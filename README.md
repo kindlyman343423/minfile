@@ -25,17 +25,41 @@ bash build.bash
 
 Now you have fresh binary in bin folder for your distro
 
+### WINDOWS
+
+Coming soon
+
+## TEST OUR APPLICATION OUTPUT
+
+Feel cool because you can test our application also. For that follow below steps
+
+* Open terminal or cmd in repo root folder
+* Go to test directory and see test output
+
+```bash
+cd test
+bash test.bash
+```
+
 ## USAGE
 
-Run the binary in case of linux as
+**Please copy this binary on same location as that of your file which you want to convert.For right use copy your file to bin folder.**
+
+Navigate to bin directory
+
+### Using c binary (For linux distro only)
 
 ```bash
 ./minfile filename.css
 ```
 
-You can see new file of name `filename.min.css`. Open that file and see the output.
+### Using bash script (For linux distro only)
 
-**Please copy this binary on same location as that of your file which you want to convert**
+```bash
+bash minfile.bash
+```
+
+**You will see new file of name `filename.min.css` present in mfiles folder. Open that file and see the output.**
 
 ## FILETYPE SUPPORT
 
@@ -43,23 +67,6 @@ You can see new file of name `filename.min.css`. Open that file and see the outp
 * html (partially supported)
 * js (partially supported)
 * c (partially supported)
-
-## TEST OUR APPLICATION
-
-Feel cool because you can test our application also. For that follow below steps
-
-* Open terminal or cmd in repo root folder
-* Go to test directory
-
-```bash
-cd test
-```
-
-* Now start usage by
-
-```bash
-./minfile test.css
-```
 
 ## RESULTS
 
