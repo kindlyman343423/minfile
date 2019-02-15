@@ -1,17 +1,20 @@
 #!bin/bash
 
 # for testing only
+echo "Testing new build..."
 
+echo "Do you want to synchronize new build(Y/N)"
+read opt
+
+if [[ $opt == 'Y' ]] || [[ $opt == 'y' ]];then
 cd ..                                   # navigate to root directory
-
-echo "building files for testing only"
 bash build.bash                         # build script
-
-cd test                                 # navigate to test folder for testing
+cd test                                 # navigate back to test folder for testing
+fi
 
 echo "Enter filename for test output"
 read filename                           # getting filename from user
 ./minfile $filename                     # executing the file
 
-echo "Min files are auto-generated in mfiles directory"
-mv *.min.* ../mfiles                    # move min files to mfiles directory for safe keeping
+echo "Min files are auto-generated in mfiles/test directory"
+mv *.min.* ../mfiles/test              # move min files to mfiles/test directory for safe keeping
