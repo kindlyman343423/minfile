@@ -78,6 +78,13 @@ bool checkValid(char *str)
 }
 
 //0-999 hashes
+/**
+ * it is the hash function for the string
+ * 
+ * @param string
+ * 
+ * @return int for hash value
+ **/
 int sha(char *str)
 {
     int result=0;
@@ -88,6 +95,13 @@ int sha(char *str)
     return result%1000;
 }
 
+/**
+ * This function will search a string in the collection of JavaScript reserved words
+ * 
+ * @param string
+ * 
+ * @return bool
+ **/
 bool reservedJS(char* str)
 {
     //better efficiency is needed here
@@ -108,6 +122,13 @@ bool reservedJS(char* str)
     return false;
 }
 
+/**
+ * it will search a string in the collection of reserved words
+ * 
+ * @param string
+ * 
+ * @return bool
+ **/
 bool reservedC(char* str)
 {
     char* C[] = {"auto","else","long","switch","break","enum","register","typedef","case",
@@ -118,6 +139,25 @@ bool reservedC(char* str)
     for(register int i=0;i<35;i++)
     {
         if(strcmp(C[i],str)==0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool reservedJAVA(char* str)
+{
+    char* JAVA[]={"abstract","assert","boolean","break","byte","case","catch","char",
+    "class","continue","default","do","double","else","enum","extends","final","finally",
+    "float","for","if","implements","import","istanceof","int","interface","long","native",
+    "new","null","package","private","protected","public","return","short","static","strictfp",
+    "super","switch","synchronized","this","throw","throws","transient","try","void","volatile",
+    "while"};
+
+    for(register int i=0;i<49;i++)
+    {
+        if(strcmp(JAVA[i],str)==0)
         {
             return true;
         }

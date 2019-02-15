@@ -11,3 +11,4 @@ int sha(char*);
 
 bool reservedJS(char*);
 bool reservedC(char*);
+bool reservedJAVA(char*);

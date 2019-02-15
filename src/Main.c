@@ -2,10 +2,15 @@
 
 /**
  * this is the main program
+ * 
+ * @param argc
+ * @param argv
+ * 
+ * @return int
  **/
 int main(int argc,char *argv[])
 {
-    if(argc==1 || argc>2)                                   //check arguments
+    if(argc==1 || argc>2)                                   //check argument count
     {
         printf("Invalid arguments !!!\n");
         printf("Format should be: ./minfile filename\n");
@@ -50,7 +55,7 @@ int main(int argc,char *argv[])
             ptr = fopen(argv[1],"r");                                                   //reading file for conversion
             if(ptr==NULL)
             {
-                printf("ERROR: No file found\n");
+                printf("ERROR: No file found\n");                                       //if file not found then exit the program
                 exit(1);
             }
             
@@ -67,9 +72,10 @@ int main(int argc,char *argv[])
             int j=0;
             char *newfile = (char*)malloc(sizeof(char)*newlen);                         //heap memory for new file creation
             
+            //extracting the new file name from old file name
             while(argv[1][i]!='\0')
             {
-                if(argv[1][i]=='.')
+                if(argv[1][i]=='.')                                                     //file name should have . in it
                 {
                     //add min. to string
                     newfile[j]=argv[1][i]; //.
@@ -91,13 +97,13 @@ int main(int argc,char *argv[])
             }
             newfile[j]='\0';
             
-            FILE *copy;
-            copy = fopen(newfile,"w");
-            bool flag=false;                                    //boolean for parsing
+            FILE *copy;                                                                 //file pointer for copying files
+            copy = fopen(newfile,"w");                                                  //open file for writing
+            bool flag=false;                                                            //boolean for parsing
             char str[100];
             int l=0;
 
-            while(!feof(ptr))
+            while(!feof(ptr))                                                           //writing the file
             {
                 char ch = fgetc(ptr);
                 if(ch==' ' || ch=='\n' || ch=='\t' || ch==EOF)
@@ -105,19 +111,19 @@ int main(int argc,char *argv[])
                     if(flag==true)
                     {
                         str[l]='\0';
-                        if(js && reservedJS(str) && ch==' ')          //if js reserved word found
+                        if(js && reservedJS(str) && ch==' ')                            //if js reserved word found
                         {
                             fputc(ch,copy);
                         }
-                        else if(c && reservedC(str) && ch==' ')     //if c reserved words are found
+                        else if(c && reservedC(str) && ch==' ')                         //if c reserved words are found
                         {
                             fputc(ch,copy);
                         }
-                        else if(html && ch==' ')             //print space only for js and html files
+                        else if(html && ch==' ')                                        //print space only for js and html files
                         {
                             fputc(ch,copy);
                         }
-                        else if(ch==' ' && !css)                    //if other space found
+                        else if(ch==' ' && !css)                                        //if other space found
                         {
                             fputc(ch,copy);
                         }
