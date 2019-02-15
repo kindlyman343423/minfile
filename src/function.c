@@ -146,6 +146,25 @@ bool reservedC(char* str)
     return false;
 }
 
+bool reservedCPP(char* str)
+{
+    char* CPP[]={"auto","double","int","struct","break","else","long","switch","case","enum","register",
+    "typedef","char","extern","return","union","const","float","short","unsigned","continue",
+    "for","signed","void","default","goto","sizeof","volatile","do","if","static","while","asm","bool"
+    ,"catch","class","const_cast","delete","dynamic_cast","explicit","export","false","friend",
+    "inline","mutable","namespace","new","operator","private","protected","public","reinterpret_cast",
+    "static_cast","template","this","throw","true","try","typeid","typename","using","virtual","wchar_t"};
+
+    for(register int i=0;i<63;i++)
+    {
+        if(strcmp(CPP[i],str)==0)
+        {
+            return true;
+        }
+    }
+    return false;
+} 
+
 bool reservedJAVA(char* str)
 {
     char* JAVA[]={"abstract","assert","boolean","break","byte","case","catch","char",
