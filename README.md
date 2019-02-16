@@ -1,6 +1,6 @@
 # MINFILE
 
-It is a cli application to generate min file size easily.
+It is a cli application to generate min file size easily. For example file.css to file.min.css.
 
 ## DEPENDENCIES
 
@@ -17,13 +17,13 @@ It is a cli application to generate min file size easily.
 
 ### LINUX
 
-For build for your linux distro use
+For building in your linux distro use
 
 ```bash
 bash build.bash
 ```
 
-Now you have fresh binary in bin folder for your distro
+Select Y for release/using new update.Now you have fresh binary in bin folder for your distro.
 
 ### WINDOWS
 
@@ -34,12 +34,14 @@ Coming soon
 Feel cool because you can test our application also. For that follow below steps
 
 * Open terminal or cmd in repo root folder
-* Go to test directory and see test output
+* Go to test directory and see test output using commands:
 
 ```bash
 cd test
 bash test.bash
 ```
+
+* Enter the filename to convert. Now you can see converted min file in mfiles in test directory.
 
 ## USAGE
 
