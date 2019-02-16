@@ -88,7 +88,8 @@ bool checkValid(char *str)
 int sha(char *str)
 {
     int result=0;
-    for(register int i=0;i<strlen(str);i++)
+    register int i;
+    for(i=0;i<strlen(str);i++)
     {
         result= result + (int)str[i];
     }
@@ -112,7 +113,8 @@ bool reservedJS(char* str)
                 ,"const","for","package","try","continue","function","private","typeof","debugger","goto","protected","var","default","if","public","void","delete"
                 ,"implements","return","volatile","do","import","short","while","double","in","static","with"};
     
-    for(int i=0;i<60;i++)
+    register int i;
+    for(i=0;i<60;i++)
     {   
         if(strcmp(JS[i],str)==0)
         {
@@ -136,7 +138,8 @@ bool reservedC(char* str)
     ,"void","continue","goto","sizeof","volatile","default","if","static","while","do",
     "int","struct","double","bool","true","false"};
 
-    for(register int i=0;i<35;i++)
+    register int i;
+    for(i=0;i<35;i++)
     {
         if(strcmp(C[i],str)==0)
         {
@@ -162,7 +165,8 @@ bool reservedCPP(char* str)
     "inline","mutable","namespace","new","operator","private","protected","public","reinterpret_cast",
     "static_cast","template","this","throw","true","try","typeid","typename","using","virtual","wchar_t"};
 
-    for(register int i=0;i<63;i++)
+    register int i;
+    for(i=0;i<63;i++)
     {
         if(strcmp(CPP[i],str)==0)
         {
@@ -188,7 +192,8 @@ bool reservedJAVA(char* str)
     "super","switch","synchronized","this","throw","throws","transient","try","void","volatile",
     "while"};
 
-    for(register int i=0;i<49;i++)
+    register int i=0;
+    for(i=0;i<49;i++)
     {
         if(strcmp(JAVA[i],str)==0)
         {
@@ -217,7 +222,8 @@ bool reservedCSharp(char* str)
     ,"unit","ulong","unchecked","unsafe","ushort","using","using static","virtual","void","volatile"
     ,"while"};
 
-    for(register int i=0;i<78;i++)
+    register int i;
+    for(i=0;i<78;i++)
     {
         if(strcmp(CSHARP[i],str)==0)
         {
