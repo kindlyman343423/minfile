@@ -64,8 +64,13 @@ int main(int argc,char *argv[])
              * 
              * test.html    ->  test.min.html
              * test.css     ->  test.min.css
+             * test.scss    ->  test.min.scss
+             * test.json    ->  test.min.json
              * test.js      ->  test.min.js
              * test.c       ->  test.min.c
+             * test.cpp     ->  test.min.cpp
+             * test.java    ->  test.min.java
+             * test.cs      ->  test.min.cs
              **/
             int newlen = len+5;                                                         //increased length because of min
             int i=0;
