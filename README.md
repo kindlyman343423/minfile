@@ -2,6 +2,8 @@
 
 It is a cli application to generate min file size easily. For example file.css to file.min.css.
 
+[![Build Status](https://travis-ci.com/GauravWalia19/minfile.svg?branch=master)](https://travis-ci.com/GauravWalia19/minfile)
+
 ## DEPENDENCIES
 
 * gcc compiler
