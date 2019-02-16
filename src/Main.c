@@ -104,7 +104,7 @@ int main(int argc,char *argv[])
                     break;          
             }                                                       //end of switch arg 1
 
-            printf("printing boolean: %d %d %d %d %d %d %d %d %d\n",js,css,scss,json,html,c,cpp,java,csharp);
+            // printf("printing boolean: %d %d %d %d %d %d %d %d %d\n",js,css,scss,json,html,c,cpp,java,csharp);
 
             FILE *ptr;
             ptr = fopen(argv[1],"r");                                                   //reading file for conversion
