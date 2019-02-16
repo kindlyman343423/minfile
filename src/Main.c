@@ -10,46 +10,101 @@
  **/
 int main(int argc,char *argv[])
 {
-    if(argc==1 || argc>2)                                   //check argument count
+    if(argc==1 || argc>2)                                       //check argument count
     {
         printf("Invalid arguments !!!\n");
         printf("Format should be: ./minfile filename\n");
     }
     else if(argc==2)
     {
-        //check for valid file
-        printf("Valid filename: %d\n",checkValid(argv[1]));
+        printf("Valid filename: %d\n",checkValid(argv[1]));     //check for valid file
        
-
-        if(checkValid(argv[1]))                                                         //if valid filename found
+        if(checkValid(argv[1]))                                 //if valid filename found
         {
             //booleans for file extensions
-            bool js=false;                                                              //initial value of js is false
-            bool css = false;                                                           //initial value of css is false
-            bool html=false;                                                            //initial value of html is false
-            bool c = false;
-            bool cpp = false;
-            bool java = false;
+            bool js     =   false;                              //* initial
+            bool css    =   false;                              //* values
+            bool scss   =   false;                              //* for 
+            bool json   =   false;                              //* all             
+            bool html   =   false;                              //* langauge
+            bool c      =   false;                              //* are
+            bool cpp    =   false;                              //* taken
+            bool java   =   false;                              //* false
+            bool csharp =   false;                              //*
 
-            //setting the boolean according to file extensions
+            /**
+             * setting the boolean according to file extensions
+             * checking in better way using jumping table
+             **/
             int len = strlen(argv[1]);
             
-            if(argv[1][len-1]=='s' && argv[1][len-2]=='j')                              //checking for js
+            char ch=argv[1][len-1];                                 //last char of file extension
+            
+            switch(ch)
             {
-                js=true;
-            }
-            else if(argv[1][len-1]=='s' && argv[1][len-2]=='s' && argv[1][len-3]=='c')  //checking for css
-            {
-                css=true;
-            }
-            else if(argv[1][len-1]=='l' && argv[1][len-2]=='m' && argv[1][len-3]=='t' && argv[1][len-4]=='h') //checking for html
-            {
-                html=true;
-            }
-            else if(argv[1][len-1]=='c')
-            {
-                c=true;
-            }
+                case 'c':                                           //chances: c
+                    c=true;                                         //file found: c
+                    break;
+                case 'p':                                           //chances: cpp
+                    if(argv[1][len-2]=='p' && argv[1][len-3]=='c')
+                    {
+                        cpp = true;                                 //file found: cpp
+                    }               
+                    break;
+                case 's':                                           //chances: cs css js scss
+                    ch = argv[1][len-2];                            //second last char of file extension
+                    switch(ch)
+                    {
+                        case 'c':                                   //chances: cs
+                            csharp=true;                            //file found: c#
+                            break;
+                        case 's':                                   //chances: css scss
+                            ch = argv[1][len-3];                    //last third char of file extension
+                            switch(ch)
+                            {
+                                case 'c':                           //chances: css scss
+                                
+                                    ch = argv[1][len-4];
+                                    switch(ch)
+                                    {
+                                        case '.':                   //chances: css
+                                            css=true;               //file found: css
+                                            break;
+                                        case 's':                   //chances: scss
+                                            scss=true;              //file found: scss
+                                            break;
+                                        default:
+                                            break;
+                                    }                               //end of switch arg 4
+                                    break;
+                                default:
+                                    break;
+                            }                                       //end of switch arg 3
+                            break;
+                        case 'j':                                   //chances js
+                            js = true;                              //js file found
+                            break;
+                        default:                                    
+                            break;
+                    }                                               //end of switch arg 2
+                    break;
+                case 'l':                                           //chances: html
+                    if(argv[1][len-2]=='m' && argv[1][len-3]=='t' && argv[1][len-4]=='h')
+                        html = true;                                //file found: html
+                    break;
+                case 'a':                                           //chances: java
+                    if(argv[1][len-2]=='v' && argv[1][len-3]=='a' && argv[1][len-4]=='j')
+                        java=true;                                  //file found: java
+                    break;
+                case 'n':                                           //chances: json
+                    if(argv[1][len-2]=='o' && argv[1][len-3]=='s' && argv[1][len-4]=='j')
+                        json=true;                                  //file found: json
+                    break;
+                default:                                            
+                    break;          
+            }                                                       //end of switch arg 1
+
+            printf("printing boolean: %d %d %d %d %d %d %d %d %d\n",js,css,scss,json,html,c,cpp,java,csharp);
 
             FILE *ptr;
             ptr = fopen(argv[1],"r");                                                   //reading file for conversion
