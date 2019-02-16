@@ -17,4 +17,4 @@ read filename                           # getting filename from user
 ./minfile $filename                     # executing the file
 
 echo "Min files are auto-generated in mfiles/test directory"
-mv *.min.* ../mfiles/test              # move min files to mfiles/test directory for safe keeping
+mv *.min.* ../mfiles/tested              # move min files to mfiles/test directory for safe keeping

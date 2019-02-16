@@ -10,27 +10,27 @@
  **/
 int main(int argc,char *argv[])
 {
-    if(argc==1 || argc>2)                                       //check argument count
+    if(argc==1 || argc>2)                                           //check argument count
     {
         printf("Invalid arguments !!!\n");
         printf("Format should be: ./minfile filename\n");
     }
     else if(argc==2)
     {
-        printf("Valid filename: %d\n",checkValid(argv[1]));     //check for valid file
+        printf("Valid filename: %d\n",checkValid(argv[1]));         //check for valid file
        
-        if(checkValid(argv[1]))                                 //if valid filename found
+        if(checkValid(argv[1]))                                     //if valid filename found
         {
             //booleans for file extensions
-            bool js     =   false;                              //* initial
-            bool css    =   false;                              //* values
-            bool scss   =   false;                              //* for 
-            bool json   =   false;                              //* all             
-            bool html   =   false;                              //* langauge
-            bool c      =   false;                              //* are
-            bool cpp    =   false;                              //* taken
-            bool java   =   false;                              //* false
-            bool csharp =   false;                              //*
+            bool js     =   false;                                  //* initial
+            bool css    =   false;                                  //* values
+            bool scss   =   false;                                  //* for 
+            bool json   =   false;                                  //* all             
+            bool html   =   false;                                  //* langauge
+            bool c      =   false;                                  //* are
+            bool cpp    =   false;                                  //* taken
+            bool java   =   false;                                  //* false
+            bool csharp =   false;                                  //*
 
             /**
              * setting the boolean according to file extensions
@@ -107,10 +107,10 @@ int main(int argc,char *argv[])
             // printf("printing boolean: %d %d %d %d %d %d %d %d %d\n",js,css,scss,json,html,c,cpp,java,csharp);
 
             FILE *ptr;
-            ptr = fopen(argv[1],"r");                                                   //reading file for conversion
+            ptr = fopen(argv[1],"r");                               //reading file for conversion
             if(ptr==NULL)
             {
-                printf("ERROR: No file found\n");                                       //if file not found then exit the program
+                printf("ERROR: No file found\n");                   //if file not found then exit the program
                 exit(1);
             }
             
@@ -127,15 +127,15 @@ int main(int argc,char *argv[])
              * test.java    ->  test.min.java
              * test.cs      ->  test.min.cs
              **/
-            int newlen = len+5;                                                         //increased length because of min
+            int newlen = len+5;                                     //increased length because of min
             int i=0;
             int j=0;
-            char *newfile = (char*)malloc(sizeof(char)*newlen);                         //heap memory for new file creation
+            char *newfile = (char*)malloc(sizeof(char)*newlen);     //heap memory for new file creation
             
             //extracting the new file name from old file name
             while(argv[1][i]!='\0')
             {
-                if(argv[1][i]=='.')                                                     //file name should have . in it
+                if(argv[1][i]=='.')                                 //file name should have . in it
                 {
                     //add min. to string
                     newfile[j]=argv[1][i]; //.
@@ -157,33 +157,37 @@ int main(int argc,char *argv[])
             }
             newfile[j]='\0';
             
-            FILE *copy;                                                                 //file pointer for copying files
-            copy = fopen(newfile,"w");                                                  //open file for writing
-            bool flag=false;                                                            //boolean for parsing
-            char str[100];
-            int l=0;
+            FILE *copy;                                             //file pointer for copying files
+            copy = fopen(newfile,"w");                              //open file for writing
+            bool flag=false;                                        //boolean for parsing
+            char str[100];                                          //string for temp storage
+            int l=0;                                                //iterator for string storage
 
-            while(!feof(ptr))                                                           //writing the file
+            while(!feof(ptr))                                       //writing the file
             {
                 char ch = fgetc(ptr);
                 if(ch==' ' || ch=='\n' || ch=='\t' || ch==EOF)
                 {
-                    if(flag==true)
+                    if(flag)                                        //when we go from word to space
                     {
                         str[l]='\0';
-                        if(js && reservedJS(str) && ch==' ')                            //if js reserved word found
+                        if(css || scss || json)                     //when css,scss,json file found
+                        {
+                            //do nothing just compress
+                        }
+                        else if(js && reservedJS(str) && ch==' ')   //if js reserved word found
                         {
                             fputc(ch,copy);
                         }
-                        else if(c && reservedC(str) && ch==' ')                         //if c reserved words are found
+                        else if(c && reservedC(str) && ch==' ')     //if c reserved words are found
                         {
                             fputc(ch,copy);
                         }
-                        else if(html && ch==' ')                                        //print space only for js and html files
+                        else if(html && ch==' ')                    //print space only for html files
                         {
                             fputc(ch,copy);
                         }
-                        else if(ch==' ' && !css)                                        //if other space found
+                        else if(ch==' ')                            //for other file format
                         {
                             fputc(ch,copy);
                         }

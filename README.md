@@ -43,7 +43,7 @@ cd test
 bash test.bash
 ```
 
-* Enter the filename to convert. Now you can see converted min file in mfiles in test directory.
+* Enter the filename to convert. Now you can see converted min file in mfiles in tested directory.
 
 ## USAGE
 
@@ -68,9 +68,14 @@ bash minfile.bash
 ## FILETYPE SUPPORT
 
 * css
+* scss
+* json
 * html (partially supported)
 * js (partially supported)
 * c (partially supported)
+* c# (partially supported)
+* c++ (partially supported)
+* java (partially supported)
 
 ## RESULTS
 
