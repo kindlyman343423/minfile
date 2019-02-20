@@ -14,3 +14,4 @@ bool reservedC(char*);
 bool reservedCPP(char*);
 bool reservedJAVA(char*);
 bool reservedCSharp(char*);
+bool reservedHTML(char*);

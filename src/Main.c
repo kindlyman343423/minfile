@@ -113,7 +113,6 @@ int main(int argc,char *argv[])
                 printf("ERROR: No file found\n");                   //if file not found then exit the program
                 exit(1);
             }
-            
             /**
              * create new file extension
              * 
@@ -185,7 +184,11 @@ int main(int argc,char *argv[])
                         }
                         else if(html && ch==' ')                    //print space only for html files
                         {
-                            fputc(ch,copy);
+                            if(reservedHTML(str))
+                            {
+                                fputc(ch,copy);    
+                            }
+                            // fputc(ch,copy);
                         }
                         else if(ch==' ')                            //for other file format
                         {

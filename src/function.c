@@ -133,7 +133,7 @@ bool reservedJS(char* str)
  **/
 bool reservedC(char* str)
 {
-    char* C[] = {"auto","else","long","switch","break","enum","register","typedef","case",
+    char* C[] = {"auto","else","lo ng","switch","break","enum","register","typedef","case",
     "extern","return","union","char","float","short","unsigned","const","for","signed"
     ,"void","continue","goto","sizeof","volatile","default","if","static","while","do",
     "int","struct","double","bool","true","false"};
@@ -226,6 +226,22 @@ bool reservedCSharp(char* str)
     for(i=0;i<78;i++)
     {
         if(strcmp(CSHARP[i],str)==0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool reservedHTML(char *str)
+{
+    char* HTML[] ={"<html","<head","<title","<!DOCTYPE","<body","<header","<section","<footer","<style","<script",
+    "<meta","<b","<i","<input","<select"};
+
+    register int i;
+    for(i=0;i<15;i++)
+    {
+        if(strcmp(HTML[i],str)==0)
         {
             return true;
         }
