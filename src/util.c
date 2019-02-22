@@ -1,5 +1,7 @@
 //Dan Bernstein.
-//djb2
+//djb2 --best algo finded
+// unsigned int val = danhash("rof");
+    // printf("%d %u",val,UINT_MAX);
 unsigned long danhash(unsigned char *str)
 {
     unsigned long hash = 5381;
