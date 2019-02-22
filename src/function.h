@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <limits.h>
 
 bool wildcard(char);
 bool checkValid(char*);
@@ -15,3 +16,5 @@ bool reservedCPP(char*);
 bool reservedJAVA(char*);
 bool reservedCSharp(char*);
 bool reservedHTML(char*);
+
+bool greaterstr(char*,char*);

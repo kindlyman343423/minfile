@@ -1,5 +1,5 @@
 #include "function.c"
-
+#include "util.c"
 /**
  * this is the main program
  * 
@@ -10,6 +10,11 @@
  **/
 int main(int argc,char *argv[])
 {
+    // exit(1);
+    unsigned int val = danhash("rof");
+    // printf("%d %u",val,UINT_MAX);
+    exit(0);
+
     if(argc==1 || argc>2)                                           //check argument count
     {
         printf("Invalid arguments !!!\n");
@@ -106,6 +111,14 @@ int main(int argc,char *argv[])
 
             // printf("printing boolean: %d %d %d %d %d %d %d %d %d\n",js,css,scss,json,html,c,cpp,java,csharp);
 
+            //making hashtable
+            unsigned int hashtable[UINT_MAX];
+            register int i=0;
+            for(i=0;i<UINT_MAX;i++)
+            {
+                hashtable[i]=0;
+            }
+
             FILE *ptr;
             ptr = fopen(argv[1],"r");                               //reading file for conversion
             if(ptr==NULL)
@@ -188,7 +201,6 @@ int main(int argc,char *argv[])
                             {
                                 fputc(ch,copy);    
                             }
-                            // fputc(ch,copy);
                         }
                         else if(ch==' ')                            //for other file format
                         {

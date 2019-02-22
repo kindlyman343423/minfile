@@ -108,8 +108,8 @@ bool reservedJS(char* str)
     //better efficiency is needed here
     //may be binary search tree for string searching
     //js reserved words
-    char* JS[] = {"abstract","else","instanceof","super","boolean","enum","int","switch","break","export","interface","synchronised","byte","extends","let"
-                ,"this","case","false","long","throw","catch","final","native","throws","char","finally","new","transient","class","float","null","true"
+    char* JS[] = {"new","abstract","else","instanceof","super","boolean","enum","int","switch","break","export","interface","synchronised","byte","extends","let"
+                ,"this","case","false","long","throw","catch","final","native","throws","char","finally","transient","class","float","null","true"
                 ,"const","for","package","try","continue","function","private","typeof","debugger","goto","protected","var","default","if","public","void","delete"
                 ,"implements","return","volatile","do","import","short","while","double","in","static","with"};
     
@@ -244,6 +244,49 @@ bool reservedHTML(char *str)
         if(strcmp(HTML[i],str)==0)
         {
             return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * it will return true when string 1 is greater than string 2
+ * 
+ * @param string 1
+ * @param string 2
+ * 
+ * @return bool
+ **/
+bool greaterstr(char* str1,char* str2)
+{
+    register int i=0;
+    register int j=0;
+    while(true)
+    {
+        if(str1[i]=='\0' && str2[j]=='\0')
+        {
+            return true;
+        }
+        else if(str1[i]=='\0')
+        {
+            return false;
+        }
+        else if(str2[j]=='\0')
+        {
+            return true;
+        }
+        if(str1[i]==str2[j])
+        {
+            i++;
+            j++;
+        }
+        else if(str1[i]>str2[j])
+        {
+            return true;
+        }
+        else if(str1[i]<str2[j])
+        {
+            return false;
         }
     }
     return false;
