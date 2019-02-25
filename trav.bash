@@ -14,4 +14,4 @@ cd ..
 cd test
 bash tests.bash
 
-echo "Test completed"
+echo "****** Test completed *****"
