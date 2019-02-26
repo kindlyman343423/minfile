@@ -1,3 +1,5 @@
+#include "util.h"
+
 //Dan Bernstein.
 //djb2 --best algo finded
 // unsigned int val = danhash("rof");

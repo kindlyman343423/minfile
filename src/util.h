@@ -1,3 +1,5 @@
+#include "Main.h"
+
 /*structure for bst*/
 struct Node
 {
