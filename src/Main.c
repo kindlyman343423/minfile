@@ -10,7 +10,7 @@
  **/
 int main(int argc,char* argv[])
 {
-    if(argc==1)                                           //check argument count
+    if(argc==1)                                                             // check argument count
     {
         printf("Invalid arguments !!!\n");
         printf("Format should be: ./minfile filename\n");

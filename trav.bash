@@ -1,14 +1,14 @@
 #!bin/bash
 
-echo "Building..."
+echo "***** Building *****"
 
 cd src                                          # navigate to source directory
 gcc Main.c -o minfile                           # produce the main output file minfile
-cp minfile ../test                              # copy new binary to test directory
+mv minfile ../test                              # move new binary to test directory
 
-echo "Build completed"
+echo -e "***** Build completed *****\n"
 
-echo "Testing..."
+echo -e "***** Testing *****\n"
 
 cd ..
 cd test
