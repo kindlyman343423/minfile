@@ -8,6 +8,17 @@ echo -e ""
 cat test.min.css
 echo -e "\n------------------------------------------------------\n"
 
+echo "====================> Test SCSS 1 <===================="
+./minfile test.scss
+echo -e ""
+cat test.min.scss
+echo -e "\n------------------------------------------------------\n"
+
+echo "====================> Test JSON 1 <===================="
+./minfile test.json
+echo -e ""
+cat test.min.json
+echo -e "\n------------------------------------------------------\n"
 
 echo "====================> Test HTML 1 <===================="
 ./minfile test.html
