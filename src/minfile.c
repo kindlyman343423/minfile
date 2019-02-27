@@ -171,7 +171,7 @@ void minfile(char* argv)
         bool flag=false;                                        // boolean for parsing
         char str[100];                                          // string for temp storage
         int l=0;                                                // iterator for string storage
-
+        bool dcomma=false;                                      // boolean for double commas
         while(!feof(ptr))                                       // writing the file
         {
             char ch = fgetc(ptr);
@@ -183,6 +183,10 @@ void minfile(char* argv)
                     if(css || scss || json)                     // when css,scss,json file found
                     {
                         //compress all chars
+                        if(dcomma==true && json && ch==' ')     // comma mechanism for json
+                        {
+                            fputc(ch,copy);
+                        }
                     }
                     else if(html && ch==' ')                    // print space only for html files
                     {
@@ -212,6 +216,17 @@ void minfile(char* argv)
                 if(flag==false)
                 {
                     flag=true;
+                }
+                if(ch=='\"' && json)                            // if double commas come in json
+                {
+                    if(dcomma==true)                            // if string is ending then do it false
+                    {
+                        dcomma=false;
+                    }
+                    else                                        // if string is started then doing it true                                                
+                    {
+                        dcomma=true;
+                    }
                 }
                 fputc(ch,copy);
                 str[l] = ch;
