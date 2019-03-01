@@ -95,6 +95,10 @@ pwsh minfile.ps1
 
 **You will see new file of name `filename.min.css` present in mfiles folder. Open that file and see the output.**
 
+## Documentation
+
+Releasing soon...
+
 ## LICENSE
 
 [MIT License](LICENSE)

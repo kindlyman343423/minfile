@@ -5,6 +5,7 @@
  * for discarding char in filename
  * 
  * @param ch for char
+ * 
  * @return bool
  **/
 bool wildcard(char ch)
@@ -49,9 +50,11 @@ bool wildcard(char ch)
 }
 
 /**
- * it will check wheter the string is valid or not
+ * it will check whether the string is valid or not
+ * i.e it contains single . or not
  * 
  * @param string
+ * 
  * @return bool
  **/
 bool checkValid(char *str)
@@ -77,29 +80,10 @@ bool checkValid(char *str)
     return false;
 }
 
-//0-999 hashes
-/**
- * it is the hash function for the string
- * 
- * @param string
- * 
- * @return int for hash value
- **/
-int sha(char *str)
-{
-    int result=0;
-    register int i;
-    for(i=0;i<strlen(str);i++)
-    {
-        result= result + (int)str[i];
-    }
-    return result%1000;
-}
-
 /**
  * This function will search a string in the collection of JavaScript reserved words
  * 
- * @param string
+ * @param search string
  * 
  * @return bool
  **/
@@ -127,7 +111,7 @@ bool reservedJS(char* str)
 /**
  * it will search a string in the collection of reserved words in C language
  * 
- * @param string
+ * @param search string
  * 
  * @return bool
  **/
@@ -152,7 +136,7 @@ bool reservedC(char* str)
 /**
  * it will search a string in the collection of reserved words in C++ language
  * 
- * @param string
+ * @param search string
  * 
  * @return bool
  **/
@@ -177,9 +161,9 @@ bool reservedCPP(char* str)
 } 
 
 /**
- * it will search a string in the collection of reserved words in KAVA language
+ * it will search a string in the collection of reserved words in JAVA language
  * 
- * @param string
+ * @param search string
  * 
  * @return bool
  **/
@@ -206,7 +190,7 @@ bool reservedJAVA(char* str)
 /**
  * it will search a string in the collection of reserved words in C# language
  * 
- * @param string
+ * @param search string
  * 
  * @return bool
  **/
@@ -233,6 +217,13 @@ bool reservedCSharp(char* str)
     return false;
 }
 
+/**
+ * This function conveys that the string is a html keyword or not
+ * 
+ * @param search string
+ * 
+ * @return bool
+ **/
 bool reservedHTML(char *str)
 {
     char* HTML[] ={"<html","<head","<title","<!DOCTYPE","<body","<header","<section","<footer","<style","<script",
@@ -250,44 +241,61 @@ bool reservedHTML(char *str)
 }
 
 /**
- * it will return true when string 1 is greater than string 2
+ * It will build keyword tree of html keywords
  * 
- * @param string 1
- * @param string 2
- * 
- * @return bool
+ * @return void
  **/
-bool greaterstr(char* str1,char* str2)
+void buildHTML()
 {
-    register int i=0;
-    register int j=0;
-    while(true)
-    {
-        if(str1[i]=='\0' && str2[j]=='\0')
-        {
-            return true;
-        }
-        else if(str1[i]=='\0')
-        {
-            return false;
-        }
-        else if(str2[j]=='\0')
-        {
-            return true;
-        }
-        if(str1[i]==str2[j])
-        {
-            i++;
-            j++;
-        }
-        else if(str1[i]>str2[j])
-        {
-            return true;
-        }
-        else if(str1[i]<str2[j])
-        {
-            return false;
-        }
-    }
-    return false;
+
+}
+
+/**
+ * It will build keyword tree of Javscript keywords
+ * 
+ * @return void
+ **/
+void buildJS()
+{
+
+}
+
+/**
+ * It will build keyword tree of C keywords
+ * 
+ * @return void
+ **/
+void buildC()
+{
+
+}
+
+/**
+ * It will build keyword tree of C++ keywords
+ * 
+ * @return void
+ **/
+void buildCPP()
+{
+
+}
+
+/**
+ * It will build keyword tree of JAVA keywords
+ * 
+ * @return void
+ **/
+void buildJAVA()
+{
+
+}
+
+/**
+ * It will build keyword tree of CSharp keywords
+ * 
+ * @return void
+ **/
+void buildCSharp()
+{
+
 }

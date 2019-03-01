@@ -15,11 +15,11 @@ void minfile(char* argv)
     if(checkValid(argv))                                        // if valid filename found
     {
         //booleans for file extensions
-        bool js     =   false;                                  //* initial
-        bool css    =   false;                                  //* values
-        bool scss   =   false;                                  //* for 
-        bool json   =   false;                                  //* all             
-        bool html   =   false;                                  //* langauge
+        bool css    =   false;                                  //* initial
+        bool scss   =   false;                                  //* values 
+        bool json   =   false;                                  //* for             
+        bool html   =   false;                                  //* all
+        bool js     =   false;                                  //* langauge
         bool c      =   false;                                  //* are
         bool cpp    =   false;                                  //* taken
         bool java   =   false;                                  //* false
@@ -97,21 +97,12 @@ void minfile(char* argv)
                 break;          
         }                                                       // end of switch arg 1
 
-            // printf("printing boolean: %d %d %d %d %d %d %d %d %d\n",js,css,scss,json,html,c,cpp,java,csharp);
+        // printf("printing boolean: %d %d %d %d %d %d %d %d %d\n",js,css,scss,json,html,c,cpp,java,csharp);
 
-            //making hashtable
-            // unsigned int hashtable[UINT_MAX];
-            
-            // register int k=0;
-            // for(k=0;k<UINT_MAX;k++)
-            // {
-            //     hashtable[k]=0;
-            // }
-            // for(k=0;k<UINT_MAX;k++)
-            // {
-            //     printf("%u ",hashtable[k]);
-            // }
-            // exit(0);
+        /**
+         * making bst according to language extension
+         **/
+
 
         FILE *ptr;
         ptr = fopen(argv,"r");                                  // reading file for conversion
