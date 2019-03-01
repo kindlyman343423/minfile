@@ -2,6 +2,7 @@
 
 /**
  * this function is the main function of the application
+ * it will single file into minfile
  * 
  * @param string for filename
  * 
