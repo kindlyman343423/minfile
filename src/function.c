@@ -247,25 +247,113 @@ bool reservedJAVA(char* str)
  **/
 bool reservedCSharp(char* str)
 {
-    char* CSHARP[] ={"abstract","as","base","bool","break","byte","case","catch","char"
-    ,"checked","class","const","continue","decimal","default","delegate","do","double"
-    ,"else","enum","event","explicit","extern","false","finally","fixed","float","for"
-    ,"foreach","goto","if","implicit","in","int","interface","internal","is","lock"
-    ,"long","namespace","new","null","object","operator","out","override","params","private"
-    ,"protected","public","readonly","ref","return","sbyte","sealed","short","sizeof"
-    ,"stackalloc","static","string","struct","switch","this","throw","true","try","typeof"
-    ,"unit","ulong","unchecked","unsafe","ushort","using","using static","virtual","void","volatile"
-    ,"while"};
-
-    register int i;
-    for(i=0;i<78;i++)
+    int key = hashfunction(str);       
+    
+    /**
+     * COLLISIONS FOUND
+     * 209 -- float
+     * 165 -- lock
+     * 356 -- operator
+     * 226 -- sbyte
+     * 273 -- string
+     * 273 -- typeof
+     * 188 -- unit
+     * 287 -- ushort
+     * 344 -- volatile
+     **/
+    char ch = str[0];
+    switch (ch)
     {
-        if(strcmp(CSHARP[i],str)==0)
-        {
-            return true;
-        }
+        case 'f':
+            if(strcmp(str,"float")==0)
+            {
+                key++;
+            }
+            break;
+        case 'l':
+            if(strcmp(str,"lock")==0)
+            {
+                key++;
+            }
+            break;
+        case 'o':
+            if(strcmp(str,"operator")==0)
+            {
+                key++;
+            }
+            break;
+        case 's':
+            {
+                ch = str[1];
+                switch (ch)
+                {
+                    case 'b':
+                        if(strcmp(str,"sbyte")==0)
+                        {
+                            key++;
+                        }
+                        break;
+                    case 't':
+                        if(strcmp(str,"string")==0)
+                        {
+                            key++;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            break;
+        case 't':
+            if(strcmp(str,"typeof")==0)
+            {
+                key=key+2;
+            }
+            break;
+        case 'u':
+            {
+                ch = str[1];
+                switch (ch)
+                {
+                    case 'n':
+                        if(strcmp(str,"unit")==0)
+                        {
+                            key++;
+                        }
+                        break;
+                    case 's':
+                        if(strcmp(str,"ushort")==0)
+                        {
+                            key++;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            break;
+        case 'v':
+            if(strcmp(str,"volatile")==0)
+            {
+                key++;
+            }
+            break;
+        default:
+            break;
     }
-    return false;
+
+    if(key<0 || key>HASHSIZE)
+    {
+        return false;
+    }
+    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }   
 }
 
 
@@ -470,5 +558,58 @@ void buildJAVA()
  **/
 void buildCSharp()
 {
+    int key = INT_MIN;
 
+    HASH = (char**)malloc(sizeof(char*)*HASHSIZE);      // making hashtable of the size
+
+    char* CSHARP[] ={"abstract","as","base","bool","break","byte","case","catch","char"
+    ,"checked","class","const","continue","decimal","default","delegate","do","double"
+    ,"else","enum","event","explicit","extern","false","finally","fixed","float","for"
+    ,"foreach","goto","if","implicit","in","int","interface","internal","is","lock"
+    ,"long","namespace","new","null","object","operator","out","override","params","private"
+    ,"protected","public","readonly","ref","return","sbyte","sealed","short","sizeof"
+    ,"stackalloc","static","string","struct","switch","this","throw","true","try","typeof"
+    ,"unit","ulong","unchecked","unsafe","ushort","using","using static","virtual","void","volatile"
+    ,"while"};
+
+    register int i;
+    for(i=0;i<78;i++)
+    {
+        key = hashfunction(CSHARP[i]);
+
+        if(key >= 0 && key<HASHSIZE && HASH[key]==NULL)
+        {
+            int s = strlen(CSHARP[i]);
+            HASH[key] = (char*)malloc(sizeof(char)*(s+1));
+            strcpy(HASH[key],CSHARP[i]);
+        }
+        else                                        
+        {
+            /**
+             * COLLISIONS FOUND
+             * 209 -- float
+             * 165 -- lock
+             * 356 -- operator
+             * 226 -- sbyte
+             * 273 -- string
+             * 273 -- typeof
+             * 188 -- unit
+             * 287 -- ushort
+             * 344 -- volatile
+             **/
+            printf("collision %d  %s\n",key,CSHARP[i]);
+            // exit(1);
+            if(strcmp(CSHARP[i],"typeof")==0)
+            {
+                key=key+2;
+            }
+            else
+            {
+                key++;
+            }
+            int s = strlen(CSHARP[i]);
+            HASH[key] = (char*)malloc(sizeof(char)*(s+1));
+            strcpy(HASH[key],CSHARP[i]);
+        }
+    }
 }
