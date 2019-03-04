@@ -10,8 +10,8 @@
  **/
 int main(int argc,char* argv[])
 {
-    buildCPP();
-    // printf("%d\n",reservedCPP("goto"));
+    buildJAVA();
+    // printf("%d\n",reservedJAVA("synchronized"));
     printHashTable();
     freeHashTable();
     exit(0);

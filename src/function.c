@@ -212,22 +212,30 @@ bool reservedCPP(char* str)
  **/
 bool reservedJAVA(char* str)
 {
-    char* JAVA[]={"abstract","assert","boolean","break","byte","case","catch","char",
-    "class","continue","default","do","double","else","enum","extends","final","finally",
-    "float","for","if","implements","import","istanceof","int","interface","long","native",
-    "new","null","package","private","protected","public","return","short","static","strictfp",
-    "super","switch","synchronized","this","throw","throws","transient","try","void","volatile",
-    "while"};
-
-    register int i=0;
-    for(i=0;i<49;i++)
+    int key = hashfunction(str);       
+    /**
+     * collision solution
+     * 209-float 
+     * 308-private
+     * 268-switch
+     **/
+    if(strcmp(str,"float")==0 || strcmp(str,"private")==0 || strcmp(str,"switch")==0)  
     {
-        if(strcmp(JAVA[i],str)==0)
-        {
-            return true;
-        }
+        key++;
     }
-    return false;
+
+    if(key<0 || key>HASHSIZE)
+    {
+        return false;
+    }
+    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 /**
@@ -421,7 +429,38 @@ void buildCPP()
  **/
 void buildJAVA()
 {
+    int key = INT_MIN;
 
+    HASH = (char**)malloc(sizeof(char*)*HASHSIZE);      // making hashtable of the size
+
+    char* JAVA[]={"abstract","assert","boolean","break","byte","case","catch","char",
+    "class","continue","default","do","double","else","enum","extends","final","finally",
+    "float","for","if","implements","import","istanceof","int","interface","long","native",
+    "new","null","package","private","protected","public","return","short","static","strictfp",
+    "super","switch","synchronized","this","throw","throws","transient","try","void","volatile",
+    "while"};
+
+    register int i=0;
+    for(i=0;i<49;i++)
+    {
+        key = hashfunction(JAVA[i]);
+
+        if(key >= 0 && key<HASHSIZE && HASH[key]==NULL)
+        {
+            int s = strlen(JAVA[i]);
+            HASH[key] = (char*)malloc(sizeof(char)*(s+1));
+            strcpy(HASH[key],JAVA[i]);
+        }
+        else                                        // collisions 209-float 308-private 268-switch
+        {
+            printf("collision %d  %s\n",key,JAVA[i]);
+            // exit(1);
+            key++;
+            int s = strlen(JAVA[i]);
+            HASH[key] = (char*)malloc(sizeof(char)*(s+1));
+            strcpy(HASH[key],JAVA[i]);
+        }
+    }
 }
 
 /**
