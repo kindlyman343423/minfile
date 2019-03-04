@@ -1,110 +1,57 @@
 #include "util.h"
 
-//implementing the bst of strings
+/*HASHTABLE WORK*/
 
 /**
- * this function will insert the key in bst
+ * This is my hash function
  * 
- * @param string for key value
- * @param length of the string
- * @param root of bst
+ * @param string for hash
  * 
- * @return bool whether the insertion is done successfully or not
+ * @return hash value
  **/
-bool insert(char* str,int length,struct Node* root)
+int hashfunction(char* str)
 {
-
+    int sum=0;
+    register int i=0;
+    while(str[i]!='\0')
+    {
+        sum=sum + (int)str[i] - 65;
+        i++;
+    }
+    return sum;
 }
 
 /**
- * This function will delete the whole bst
+ * this function will print the hashtable
+ * just for testing
  * 
- * @param root of bst
- * 
- * @return bool whether the tree is successfully deleted or not
+ * @return void
  **/
-bool deletetree(struct Node* root)
-{
-
-}
-
-/**
- * This function will traverse the bst in inorder traversal for checking
- * 
- * @param root of bst
- * 
- * @return bool whether inorder is possible or not
- **/
-bool inorder(struct Node* root)
-{
-
-}
-
-/**
- * This function is main function it will search the string in bst
- * 
- * @param key to search
- * @param root of bst
- * 
- * @return bool whether the key is found in bst or not
- **/
-bool search(char* key,struct Node* root)
-{
-
-}
-
-/**
- * This function tells whether the string 1 is greater than string 2 or not
- * 
- * @param string 1
- * @param string 2
- * 
- * @return bool for result of str1 > str2
- **/
-bool greaterThan(char* str1,char* str2)
+void printHashTable()
 {
     register int i=0;
-    register int j=0;
-    while(true)
+
+    for(i=0;i<HASHSIZE;i++)
     {
-        if(str1[i]=='\0' && str2[j]=='\0')
+        if(HASH[i]!=NULL)
         {
-            return true;
-        }
-        else if(str1[i]=='\0')
-        {
-            return false;
-        }
-        else if(str2[j]=='\0')
-        {
-            return true;
-        }
-        if(str1[i]==str2[j])
-        {
-            i++;
-            j++;
-        }
-        else if(str1[i]>str2[j])
-        {
-            return true;
-        }
-        else if(str1[i]<str2[j])
-        {
-            return false;
+            printf("%d\t%s\n",i,HASH[i]);
         }
     }
-    return false;
 }
 
 /**
- * This function tells whether the string 1 is smaller than string 2 or not
+ * This function will free the memory taken by the hashtable
  * 
- * @param string 1
- * @param string 2
- * 
- * @return bool for result of str1 < str2
+ * @return void
  **/
-bool smallerThan(char* str1,char* str2)
+void freeHashTable()
 {
-
+    register int i=0;
+    
+    for(i=0;i<HASHSIZE;i++)
+    {
+        free(HASH[i]);
+    }
+    free(HASH);
 }

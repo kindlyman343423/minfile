@@ -1,6 +1,6 @@
 #include "Main.h"
-#include "function.c"
 #include "util.c"
+#include "function.c"
 #include "minfile.c"
 
 /**
@@ -10,6 +10,11 @@
  **/
 int main(int argc,char* argv[])
 {
+    buildHTML();
+    // printf("%d\n",reservedHTML("html"));
+    printHashTable();
+    freeHashTable();
+    exit(0);
     if(argc==1)                                                             // check argument count
     {
         printf("Invalid arguments !!!\n");

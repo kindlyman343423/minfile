@@ -81,6 +81,31 @@ bool checkValid(char *str)
 }
 
 /**
+ * This function conveys that the string is a html keyword or not
+ * 
+ * @param search string
+ * 
+ * @return bool
+ **/
+bool reservedHTML(char *str)
+{
+    int key = hashfunction(str);
+
+    if(key<0 || key>HASHSIZE)
+    {
+        return false;
+    }
+    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+/**
  * This function will search a string in the collection of JavaScript reserved words
  * 
  * @param search string
@@ -217,28 +242,7 @@ bool reservedCSharp(char* str)
     return false;
 }
 
-/**
- * This function conveys that the string is a html keyword or not
- * 
- * @param search string
- * 
- * @return bool
- **/
-bool reservedHTML(char *str)
-{
-    char* HTML[] ={"<html","<head","<title","<!DOCTYPE","<body","<header","<section","<footer","<style","<script",
-    "<meta","<b","<i","<input","<select"};
 
-    register int i;
-    for(i=0;i<15;i++)
-    {
-        if(strcmp(HTML[i],str)==0)
-        {
-            return true;
-        }
-    }
-    return false;
-}
 
 /**
  * It will build keyword tree of html keywords
@@ -247,7 +251,30 @@ bool reservedHTML(char *str)
  **/
 void buildHTML()
 {
+    int key = INT_MIN;
 
+    HASH = (char**)malloc(sizeof(char*)*HASHSIZE);      // making hashtable of the size
+    
+    char* HTML[] ={"<html","<head","<title","<!DOCTYPE","<body","<header","<section","<footer","<style","<script",
+    "<meta","<b","<i","<input","<select"};
+
+    register int i;
+    for(i=0;i<15;i++)
+    {
+        key = hashfunction(HTML[i]);
+
+        if(key >= 0 && key<HASHSIZE && HASH[key]==NULL)
+        {
+            int s = strlen(HTML[i]);
+            HASH[key] = (char*)malloc(sizeof(char)*(s+1));
+            strcpy(HASH[key],HTML[i]);
+        }
+        else
+        {
+            printf("BUG FOUND IN BuildHTML!!!");
+            exit(1);
+        }
+    }
 }
 
 /**

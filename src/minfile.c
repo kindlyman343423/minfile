@@ -34,6 +34,9 @@ void minfile(char* argv)
         
         char ch=argv[len-1];                                    // last char of file extension
         
+        /**
+         * making hashtable according to language extension found
+         **/
         switch(ch)
         {
             case 'c':                                           // chances: c
@@ -98,11 +101,6 @@ void minfile(char* argv)
         }                                                       // end of switch arg 1
 
         // printf("printing boolean: %d %d %d %d %d %d %d %d %d\n",js,css,scss,json,html,c,cpp,java,csharp);
-
-        /**
-         * making bst according to language extension
-         **/
-
 
         FILE *ptr;
         ptr = fopen(argv,"r");                                  // reading file for conversion
@@ -229,5 +227,10 @@ void minfile(char* argv)
         fclose(copy);
         fclose(ptr); 
         free(newfile);
+
+        /**
+         * FREEING THE HASHTABLE
+         **/
+        freeHashTable();
     }
 }

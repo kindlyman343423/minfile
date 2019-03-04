@@ -4,7 +4,6 @@
 
 bool wildcard(char);
 bool checkValid(char*);
-int sha(char*);
 
 /*RESERVED FUNCTIONS*/
 
