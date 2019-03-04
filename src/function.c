@@ -174,22 +174,33 @@ bool reservedC(char* str)
  **/
 bool reservedCPP(char* str)
 {
-    char* CPP[]={"auto","double","int","struct","break","else","long","switch","case","enum","register",
-    "typedef","char","extern","return","union","const","float","short","unsigned","continue",
-    "for","signed","void","default","goto","sizeof","volatile","do","if","static","while","asm","bool"
-    ,"catch","class","const_cast","delete","dynamic_cast","explicit","export","false","friend",
-    "inline","mutable","namespace","new","operator","private","protected","public","reinterpret_cast",
-    "static_cast","template","this","throw","true","try","typeid","typename","using","virtual","wchar_t"};
-
-    register int i;
-    for(i=0;i<63;i++)
+    int key = hashfunction(str);
+    
+    /**
+     * collision solution
+     * 349-continue 
+     * 181-goto 
+     * 209-class 
+     * 356-operator 
+     * 249-public
+     **/
+    if(strcmp(str,"continue")==0 || strcmp(str,"goto")==0 || strcmp(str,"class")==0 || strcmp(str,"operator")==0 || strcmp(str,"public")==0)  
     {
-        if(strcmp(CPP[i],str)==0)
-        {
-            return true;
-        }
+        key++;
     }
-    return false;
+
+    if(key<0 || key>HASHSIZE)
+    {
+        return false;
+    }
+    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 } 
 
 /**
@@ -369,7 +380,38 @@ void buildC()
  **/
 void buildCPP()
 {
+    int key = INT_MIN;
 
+    HASH = (char**)malloc(sizeof(char*)*HASHSIZE);      // making hashtable of the size
+
+    char* CPP[]={"auto","double","int","struct","break","else","long","switch","case","enum","register",
+    "typedef","char","extern","return","union","const","float","short","unsigned","continue",
+    "for","signed","void","default","goto","sizeof","volatile","do","if","static","while","asm","bool"
+    ,"catch","class","const_cast","delete","dynamic_cast","explicit","export","false","friend",
+    "inline","mutable","namespace","new","operator","private","protected","public","reinterpret_cast",
+    "static_cast","template","this","throw","true","try","typeid","typename","using","virtual","wchar_t"};
+
+    register int i;
+    for(i=0;i<63;i++)
+    {
+        key = hashfunction(CPP[i]);
+
+        if(key >= 0 && key<HASHSIZE && HASH[key]==NULL)
+        {
+            int s = strlen(CPP[i]);
+            HASH[key] = (char*)malloc(sizeof(char)*(s+1));
+            strcpy(HASH[key],CPP[i]);
+        }
+        else                                        // collisions 349-continue 181-goto 209-class 356-operator 249-public
+        {
+            printf("collision %d  %s\n",key,CPP[i]);
+            // exit(1);
+            key++;
+            int s = strlen(CPP[i]);
+            HASH[key] = (char*)malloc(sizeof(char)*(s+1));
+            strcpy(HASH[key],CPP[i]);
+        }
+    }
 }
 
 /**

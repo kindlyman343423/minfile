@@ -10,8 +10,8 @@
  **/
 int main(int argc,char* argv[])
 {
-    buildC();
-    printf("%d\n",reservedC("got"));
+    buildCPP();
+    // printf("%d\n",reservedCPP("goto"));
     printHashTable();
     freeHashTable();
     exit(0);
