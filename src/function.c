@@ -144,20 +144,25 @@ bool reservedJS(char* str)
  **/
 bool reservedC(char* str)
 {
-    char* C[] = {"auto","else","lo ng","switch","break","enum","register","typedef","case",
-    "extern","return","union","char","float","short","unsigned","const","for","signed"
-    ,"void","continue","goto","sizeof","volatile","default","if","static","while","do",
-    "int","struct","double","bool","true","false"};
+    int key = hashfunction(str);
 
-    register int i;
-    for(i=0;i<35;i++)
+    if(strcmp(str,"continue")==0 || strcmp(str,"goto")==0)
     {
-        if(strcmp(C[i],str)==0)
-        {
-            return true;
-        }
+        key++;
     }
-    return false;
+
+    if(key<0 || key>HASHSIZE)
+    {
+        return false;
+    }
+    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 /**
@@ -326,7 +331,35 @@ void buildJS()
  **/
 void buildC()
 {
+    int key = INT_MIN;
 
+    HASH = (char**)malloc(sizeof(char*)*HASHSIZE);      // making hashtable of the size
+
+    char* C[] = {"auto","else","long","switch","break","enum","register","typedef","case",
+    "extern","return","union","char","float","short","unsigned","const","for","signed"
+    ,"void","continue","goto","sizeof","volatile","default","if","static","while","do",
+    "int","struct","double","bool","true","false"};
+
+    register int i;
+    for(i=0;i<35;i++)
+    {
+        key = hashfunction(C[i]);
+
+        if(key >= 0 && key<HASHSIZE && HASH[key]==NULL)
+        {
+            int s = strlen(C[i]);
+            HASH[key] = (char*)malloc(sizeof(char)*(s+1));
+            strcpy(HASH[key],C[i]);
+        }
+        else                                        // collision on 349 continue  181 - goto
+        {
+            // printf("collision %d  %s\n",key,C[i]);
+            key++;
+            int s = strlen(C[i]);
+            HASH[key] = (char*)malloc(sizeof(char)*(s+1));
+            strcpy(HASH[key],C[i]);
+        }
+    }
 }
 
 /**
