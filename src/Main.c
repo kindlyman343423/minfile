@@ -10,11 +10,12 @@
  **/
 int main(int argc,char* argv[])
 {
-    buildCSharp();
-    printf("%d\n",reservedCSharp("ushort"));
-    printHashTable();
-    freeHashTable();
-    exit(0);
+    // buildCPP();
+    // printf("%d\n",reservedCPP("class"));
+    // printHashTable();
+    // freeHashTable();
+    // exit(0);
+    
     if(argc==1)                                                             // check argument count
     {
         printf("Invalid arguments !!!\n");

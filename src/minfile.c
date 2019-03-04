@@ -41,11 +41,13 @@ void minfile(char* argv)
         {
             case 'c':                                           // chances: c
                 c=true;                                         // file found: c
+                buildC();                                       // C HASHTABLE MADE
                 break;
             case 'p':                                           // chances: cpp
                 if(argv[len-2]=='p' && argv[len-3]=='c')
                 {
                     cpp = true;                                 // file found: cpp
+                    buildCPP();                                 // CPP HASHTABLE MADE
                 }               
                 break;
             case 's':                                           // chances: cs css js scss
@@ -54,6 +56,7 @@ void minfile(char* argv)
                 {
                     case 'c':                                   // chances: cs
                         csharp=true;                            // file found: c#
+                        buildCSharp();                          // CSHARP HASHTABLE MADE
                         break;
                     case 's':                                   // chances: css scss
                         ch = argv[len-3];                       // last third char of file extension
@@ -79,6 +82,7 @@ void minfile(char* argv)
                         break;
                     case 'j':                                   // chances js
                         js = true;                              // js file found
+                        buildJS();                              // JS HASHTABLE MADE
                         break;
                     default:                                    
                         break;
@@ -86,11 +90,17 @@ void minfile(char* argv)
                 break;
             case 'l':                                           // chances: html
                 if(argv[len-2]=='m' && argv[len-3]=='t' && argv[len-4]=='h')
+                {
                     html = true;                                // file found: html
+                    buildHTML();                                // HTML HASHTABLE MADE
+                }
                 break;
             case 'a':                                           // chances: java
                 if(argv[len-2]=='v' && argv[len-3]=='a' && argv[len-4]=='j')
+                {
                     java=true;                                  // file found: java
+                    buildJAVA();                                // JAVA HASHTABLE BUILD
+                }
                 break;
             case 'n':                                           // chances: json
                 if(argv[len-2]=='o' && argv[len-3]=='s' && argv[len-4]=='j')
@@ -101,7 +111,12 @@ void minfile(char* argv)
         }                                                       // end of switch arg 1
 
         // printf("printing boolean: %d %d %d %d %d %d %d %d %d\n",js,css,scss,json,html,c,cpp,java,csharp);
-
+        /**
+         * printing hashtable for checking
+         **/
+        // printHashTable();
+        // exit(1);
+        
         FILE *ptr;
         ptr = fopen(argv,"r");                                  // reading file for conversion
         if(ptr==NULL)

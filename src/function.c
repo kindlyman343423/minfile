@@ -59,8 +59,12 @@ bool wildcard(char ch)
  **/
 bool checkValid(char *str)
 {
-    int count=0;                    //counting the number of dots in the filename
+    int count=0;                                            // counting the number of dots in the filename
     int i=0;
+    
+    /**
+     * traversing the string and counting . chars
+     **/
     while(str[i]!='\0')
     {
         if(wildcard(str[i]))
@@ -73,7 +77,7 @@ bool checkValid(char *str)
         }
         i++;
     }
-    if(count==1)                    //valid for only one dot in string
+    if(count==1)                                            // valid for only one dot in string
     {
         return true;
     }
@@ -89,13 +93,13 @@ bool checkValid(char *str)
  **/
 bool reservedHTML(char *str)
 {
-    int key = hashfunction(str);
+    int key = hashfunction(str);                            // finding the key of string
 
-    if(key<0 || key>HASHSIZE)
+    if(key<0 || key>HASHSIZE)                               // if key not valid
     {
         return false;
     }
-    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)
+    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)    // key found but checking the string for total surety
     {
         return true;
     }
@@ -114,18 +118,24 @@ bool reservedHTML(char *str)
  **/
 bool reservedJS(char* str)
 {
-    int key = hashfunction(str);
+    int key = hashfunction(str);                            // finding the key of string
     
+    /**
+     * COLLISION SOLUTION
+     * Added initial shift value
+     * 
+     * float -- 210
+     **/
     if(strcmp(str,"float")==0)
     {
         key++;
     }
 
-    if(key<0 || key>HASHSIZE)
+    if(key<0 || key>HASHSIZE)                               // if key is not valid
     {
         return false;
     }
-    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)
+    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)    // if key found
     {
         return true;
     }
@@ -144,18 +154,25 @@ bool reservedJS(char* str)
  **/
 bool reservedC(char* str)
 {
-    int key = hashfunction(str);
+    int key = hashfunction(str);                            // finding the key of string
 
+    /**
+     * COLLISION SOLUTION
+     * Adding initial shift value to key
+     * 
+     * 349 -- continue  
+     * 181 -- goto
+     **/
     if(strcmp(str,"continue")==0 || strcmp(str,"goto")==0)
     {
         key++;
     }
 
-    if(key<0 || key>HASHSIZE)
+    if(key<0 || key>HASHSIZE)                               // if key is not valid
     {
         return false;
     }
-    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)
+    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)    // if key founded
     {
         return true;
     }
@@ -177,23 +194,67 @@ bool reservedCPP(char* str)
     int key = hashfunction(str);
     
     /**
-     * collision solution
-     * 349-continue 
-     * 181-goto 
+     * COLLISION SOLUTION
+     * Added initial shift value to key
+     * 
+     * 349-continue
      * 209-class 
+     * 181-goto 
      * 356-operator 
      * 249-public
      **/
-    if(strcmp(str,"continue")==0 || strcmp(str,"goto")==0 || strcmp(str,"class")==0 || strcmp(str,"operator")==0 || strcmp(str,"public")==0)  
+    char ch = str[0];
+    switch (ch)                                             // faster mechanism for comparing strings
     {
-        key++;
+        case 'c':
+            {
+                ch = str[1];
+                switch (ch)
+                {
+                    case 'o':
+                        if(strcmp(str,"continue")==0)
+                        {
+                            key++;
+                        }
+                        break;
+                    case 'l':
+                        if(strcmp(str,"class")==0)
+                        {
+                            key++;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            break;
+        case 'g':
+            if(strcmp(str,"goto")==0)
+            {
+                key++;
+            }
+            break;
+        case 'o':
+            if(strcmp(str,"operator")==0)
+            {
+                key++;
+            }
+            break;
+        case 'p':
+            if(strcmp(str,"public")==0)
+            {
+                key++;
+            }
+            break;
+        default:
+            break;
     }
 
-    if(key<0 || key>HASHSIZE)
+    if(key<0 || key>HASHSIZE)                                   // if the key is not valid       
     {
         return false;
     }
-    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)
+    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)        // if key found
     {
         return true;
     }
@@ -224,11 +285,11 @@ bool reservedJAVA(char* str)
         key++;
     }
 
-    if(key<0 || key>HASHSIZE)
+    if(key<0 || key>HASHSIZE)                                   // if key is not valid
     {
         return false;
     }
-    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)
+    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)        // if key found
     {
         return true;
     }
@@ -342,11 +403,11 @@ bool reservedCSharp(char* str)
             break;
     }
 
-    if(key<0 || key>HASHSIZE)
+    if(key<0 || key>HASHSIZE)                                   // if key is not valid
     {
         return false;
     }
-    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)
+    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)        // is key found
     {
         return true;
     }

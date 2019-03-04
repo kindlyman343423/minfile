@@ -29,6 +29,11 @@ int hashfunction(char* str)
  **/
 void printHashTable()
 {
+    if(HASH==NULL)
+    {
+        printf("NULL\n");
+        return;
+    }
     register int i=0;
 
     for(i=0;i<HASHSIZE;i++)
