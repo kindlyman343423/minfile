@@ -54,9 +54,12 @@ void freeHashTable()
 {
     register int i=0;
     
-    for(i=0;i<HASHSIZE;i++)
+    if(HASH!=NULL)
     {
-        free(HASH[i]);
+        for(i=0;i<HASHSIZE;i++)
+        {
+            free(HASH[i]);
+        }
     }
     free(HASH);
 }

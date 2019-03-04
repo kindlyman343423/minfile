@@ -561,7 +561,7 @@ void buildCPP()
         }
         else                                        // collisions 349-continue 181-goto 209-class 356-operator 249-public
         {
-            printf("collision %d  %s\n",key,CPP[i]);
+            // printf("collision %d  %s\n",key,CPP[i]);
             // exit(1);
             key++;
             int s = strlen(CPP[i]);
@@ -602,7 +602,7 @@ void buildJAVA()
         }
         else                                        // collisions 209-float 308-private 268-switch
         {
-            printf("collision %d  %s\n",key,JAVA[i]);
+            // printf("collision %d  %s\n",key,JAVA[i]);
             // exit(1);
             key++;
             int s = strlen(JAVA[i]);
@@ -658,7 +658,7 @@ void buildCSharp()
              * 287 -- ushort
              * 344 -- volatile
              **/
-            printf("collision %d  %s\n",key,CSHARP[i]);
+            // printf("collision %d  %s\n",key,CSHARP[i]);
             // exit(1);
             if(strcmp(CSHARP[i],"typeof")==0)
             {
