@@ -114,23 +114,25 @@ bool reservedHTML(char *str)
  **/
 bool reservedJS(char* str)
 {
-    //better efficiency is needed here
-    //may be binary search tree for string searching
-    //js reserved words
-    char* JS[] = {"new","abstract","else","instanceof","super","boolean","enum","int","switch","break","export","interface","synchronised","byte","extends","let"
-                ,"this","case","false","long","throw","catch","final","native","throws","char","finally","transient","class","float","null","true"
-                ,"const","for","package","try","continue","function","private","typeof","debugger","goto","protected","var","default","if","public","void","delete"
-                ,"implements","return","volatile","do","import","short","while","double","in","static","with"};
+    int key = hashfunction(str);
     
-    register int i;
-    for(i=0;i<60;i++)
-    {   
-        if(strcmp(JS[i],str)==0)
-        {
-            return true;
-        }
+    if(strcmp(str,"float")==0)
+    {
+        key++;
     }
-    return false;
+
+    if(key<0 || key>HASHSIZE)
+    {
+        return false;
+    }
+    else if(HASH[key]!=NULL && strcmp(str,HASH[key])==0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 /**
@@ -284,7 +286,37 @@ void buildHTML()
  **/
 void buildJS()
 {
+    int key = INT_MIN;
 
+    HASH = (char**)malloc(sizeof(char*)*HASHSIZE);      // making hashtable of the size
+
+    //better efficiency is needed here
+    //may be binary search tree for string searching
+    //js reserved words
+    char* JS[] = {"new","abstract","else","instanceof","super","boolean","enum","int","switch","break","export","interface","synchronised","byte","extends","let"
+                ,"this","case","false","long","throw","catch","final","native","throws","char","finally","transient","class","float","null","true"
+                ,"const","for","package","try","continue","function","private","typeof","debugger","goto","protected","var","default","if","public","void","delete"
+                ,"implements","return","volatile","do","import","short","while","double","in","static","with"};
+    
+    register int i;
+    for(i=0;i<60;i++)
+    {   
+        key = hashfunction(JS[i]);
+        
+        if(key >= 0 && key<HASHSIZE && HASH[key]==NULL)
+        {
+            int s = strlen(JS[i]);
+            HASH[key] = (char*)malloc(sizeof(char)*(s+1));
+            strcpy(HASH[key],JS[i]);
+        }
+        else                                                // collision on 210 float
+        {
+            key++;
+            int s = strlen(JS[i]);
+            HASH[key] = (char*)malloc(sizeof(char)*(s+1));
+            strcpy(HASH[key],JS[i]);
+        }
+    }
 }
 
 /**

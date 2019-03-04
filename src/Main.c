@@ -10,8 +10,8 @@
  **/
 int main(int argc,char* argv[])
 {
-    buildHTML();
-    // printf("%d\n",reservedHTML("html"));
+    buildJS();
+    // printf("%d\n",reservedJS("classes"));
     printHashTable();
     freeHashTable();
     exit(0);
