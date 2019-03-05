@@ -137,7 +137,7 @@ void minfile(char* argv)
          * test.java    ->  test.min.java
          * test.cs      ->  test.min.cs
          **/
-        int newlen = len+5;                                     // increased length because of min
+        int newlen = len+5;                                     // increased length for adding .min
         int i=0;
         int j=0;
         char *newfile = (char*)malloc(sizeof(char)*newlen);     // heap memory for new file creation
@@ -176,7 +176,13 @@ void minfile(char* argv)
         bool flag=false;                                        // boolean for parsing
         char str[100];                                          // string for temp storage
         int l=0;                                                // iterator for string storage
+        
+        /**
+         * FLAGS for exceptional behaviour
+         **/
         bool dcomma=false;                                      // boolean for double commas
+        bool lessgreater=false;                                 // boolean for html > <
+
         while(!feof(ptr))                                       // writing the file
         {
             char ch = fgetc(ptr);
@@ -193,9 +199,9 @@ void minfile(char* argv)
                             fputc(ch,copy);
                         }
                     }
-                    else if(html && ch==' ')                    // print space only for html files
+                    else if(html)                               // print space only for html files
                     {
-                        if(reservedHTML(str))
+                        if((reservedHTML(str) || !lessgreater) && ch==' ')
                         {
                             fputc(ch,copy);                     // if html tag found then there should be 1 space    
                         }
@@ -216,12 +222,16 @@ void minfile(char* argv)
                     flag=false;
                 }
             }
-            else
+            else                                                // if other char found
             {
                 if(flag==false)
                 {
                     flag=true;
                 }
+                /**
+                 * MAINTAINING FLAGS
+                 * for handling the flags for exceptions in file extension
+                 **/
                 if(ch=='\"' && json)                            // if double commas come in json
                 {
                     if(dcomma==true)                            // if string is ending then do it false
@@ -231,6 +241,17 @@ void minfile(char* argv)
                     else                                        // if string is started then doing it true                                                
                     {
                         dcomma=true;
+                    }
+                }
+                else if((ch=='<' || ch=='>') && html)           // if < > char found change flags
+                {
+                    if(lessgreater==true)                       // if lessgreater flag is true make it false for data
+                    {
+                        lessgreater=false;
+                    }
+                    else                                        // if lessgreater flag is false make it true as tags found
+                    {
+                        lessgreater=true;
                     }
                 }
                 fputc(ch,copy);
