@@ -95,6 +95,93 @@ bool reservedHTML(char *str)
 {
     int key = hashfunction(str);                            // finding the key of string
 
+    /**
+     * collison: 146 <code
+     * collison: 109 <del
+     * collison: 282 <details
+     * collison: 165 <link
+     * collison: 156 <main
+     * collison: 118 <map
+     * collison: 130 <sub
+     * collison: 144 <sup
+     * collison: 81 <td
+     * collison: 188 <thead
+     * collison: 166 <time
+     * collison: 216 <title
+     * collison: 95 <tr
+     * collison: 131 <wbr
+     **/
+    char ch = str[1];
+    switch (ch)
+    {
+        case 'c':
+            if(strcmp(str,"<code")==0)
+            {
+                key++;
+            }
+            break;
+        case 'd':
+            if(strcmp(str,"<del")==0 || strcmp(str,"<details")==0)
+            {
+                key++;
+            }
+            break;
+        case 'l':
+            if(strcmp(str,"<link")==0)
+            {
+                key++;
+            }
+            break;
+        case 'm':
+            if(strcmp(str,"<main")==0 || strcmp(str,"<map")==0)
+            {
+                key++;
+            }
+            break;
+        case 's':
+            if(strcmp(str,"<sub")==0 || strcmp(str,"<sup")==0)
+            {
+                key++;
+            }
+            break;
+        case 't':
+            {
+                ch = str[2];
+                switch (ch)
+                {
+                    case 'h':
+                        if(strcmp(str,"<thead")==0)
+                        {
+                            key++;
+                        }
+                        break;
+                    case 'i':
+                        if(strcmp(str,"<time")==0 || strcmp(str,"<title")==0)
+                        {
+                            key++;
+                        }
+                        break;
+                    case 'r':
+                        if(strcmp(str,"<tr")==0)
+                        {
+                            key++;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            break;
+        case 'w':
+            if(strcmp(str,"<wbr")==0)
+            {
+                key++;
+            }
+            break;
+        default:
+            break;
+    }
+
     if(key<0 || key>HASHSIZE)                               // if key not valid
     {
         return false;
@@ -430,11 +517,19 @@ void buildHTML()
 
     HASH = (char**)malloc(sizeof(char*)*HASHSIZE);      // making hashtable of the size
     
-    char* HTML[] ={"<html","<head","<title","<!DOCTYPE","<body","<header","<section","<footer","<style","<script",
-    "<meta","<b","<i","<input","<select"};
+    char* HTML[] ={"<!DOCTYPE","<a","<abbr","<address","<area","<article","<aside","<audio","<b","<base",
+    "<bdi","<bdo","<blockquote","<body","<br/","<br","<button","<canvas","<caption","<cite","<code","<col",
+    "<colgroup","<data","<datalist","<dd","<del","<details","<dfn","<dialog","<div","<dl","<dt","<em","<embed",
+    "<fieldset","<figcaption","<figure","<footer","<form","<frame","<frameset","<h1","<h2","<h3","<h4","<h5",
+    "<h6","<head","<header","<hr","<html","<i","<iframe","<img","<input","<ins","<kbd","<label","<legend",
+    "<li","<link","<main","<map","<amrk","<meta","<meter","<nav","<noscript","<object","<ol","<optgroup",
+    "<option","<output","<p","<param","<picture","<pre","<progress","<q","<rp","<rt","<ruby","<s","<samp",
+    "<script","<section","<select","<small","<source","<span","<strong","<style","<sub","<summary","<sup",
+    "<svg","<table","<tbody","<td","<template","<textarea","<tfoot","<th","<thead","<time","<title","<tr",
+    "<track","<tt","<u","<ul","<var","<video","<wbr"};
 
     register int i;
-    for(i=0;i<15;i++)
+    for(i=0;i<115;i++)
     {
         key = hashfunction(HTML[i]);
 
@@ -446,8 +541,13 @@ void buildHTML()
         }
         else
         {
-            printf("BUG FOUND IN BuildHTML!!!");
-            exit(1);
+            // printf("collison: %d %s\n",key,HTML[i]);
+            // printf("BUG FOUND IN BuildHTML!!!");
+            // exit(1);
+            key++;
+            int s = strlen(HTML[i]);
+            HASH[key] = (char*)malloc(sizeof(char)*(s+1));
+            strcpy(HASH[key],HTML[i]);
         }
     }
 }
