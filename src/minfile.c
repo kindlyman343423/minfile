@@ -201,7 +201,7 @@ void minfile(char* argv)
                     }
                     else if(html)                               // print space only for html files
                     {
-                        if((reservedHTML(str) || !lessgreater) && ch==' ')
+                        if((reservedHTML(str) || !lessgreater || dcomma) && ch==' ')
                         {
                             fputc(ch,copy);                     // if html tag found then there should be 1 space    
                         }
@@ -232,7 +232,7 @@ void minfile(char* argv)
                  * MAINTAINING FLAGS
                  * for handling the flags for exceptions in file extension
                  **/
-                if(ch=='\"' && json)                            // if double commas come in json
+                if(ch=='\"' && (json || html))                  // if double commas come in json,html
                 {
                     if(dcomma==true)                            // if string is ending then do it false
                     {

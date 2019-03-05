@@ -20,7 +20,7 @@ It is a **cli application** to **generate min file** size easily. For example **
 * css
 * scss
 * json
-* html (partially supported)
+* html
 * js (partially supported)
 * c (partially supported)
 * c# (partially supported)
