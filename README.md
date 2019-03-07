@@ -20,8 +20,8 @@ It is a **cli application** to **generate min file** size easily. For example **
 * css
 * scss
 * json
-* html
-* js (partially supported)
+* html (unstable)
+* js
 * c (partially supported)
 * c# (partially supported)
 * c++ (partially supported)
@@ -64,9 +64,9 @@ bash test.bash      # running bash script
 
 * **WINDOWS**
 
-```pwsh
+```powershell
 Set-Location test   # Navigate to test directory
-pwsh test.ps1       # running bash script
+pwsh test.ps1       # running powershell script
 ```
 
 * Enter the filename to convert. Now you can see converted min file in **mfiles/tested** directory.

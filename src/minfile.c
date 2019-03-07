@@ -182,6 +182,8 @@ void minfile(char* argv)
          **/
         bool dcomma=false;                                      // boolean for double commas
         bool lessgreater=false;                                 // boolean for html > <
+        bool cart = false;                                      // boolean for ` for js
+        bool curlybrackets = false;                             // boolean for { } for js
 
         while(!feof(ptr))                                       // writing the file
         {
@@ -206,9 +208,16 @@ void minfile(char* argv)
                             fputc(ch,copy);                     // if html tag found then there should be 1 space    
                         }
                     }
-                    else if(js && reservedJS(str) && ch==' ')   // if js reserved word found
+                    else if(js)                                 // if js file found
                     {
-                        fputc(ch,copy);
+                        if(ch=='\n' && str[l-1]!=';' && !curlybrackets)
+                        {
+                            fputc(';',copy);
+                        }
+                        if((reservedJS(str) || dcomma || cart) && ch==' ')
+                        {
+                            fputc(ch,copy);
+                        }
                     }
                     else if(c && reservedC(str) && ch==' ')     // if c reserved words are found
                     {
@@ -232,7 +241,7 @@ void minfile(char* argv)
                  * MAINTAINING FLAGS
                  * for handling the flags for exceptions in file extension
                  **/
-                if(ch=='\"' && (json || html))                  // if double commas come in json,html
+                if(ch=='\"' && (json || html || js))                  // if double commas come in json,html
                 {
                     if(dcomma==true)                            // if string is ending then do it false
                     {
@@ -254,8 +263,30 @@ void minfile(char* argv)
                         lessgreater=true;
                     }
                 }
-                fputc(ch,copy);
-                str[l] = ch;
+                else if(ch=='`' && js)                          // if ` found in string in js
+                {
+                    if(cart==true)
+                    {
+                        cart=false;
+                    }
+                    else
+                    {
+                        cart=true;
+                    }
+                }
+                else if((ch=='{' || ch=='}') && js)             // if { } found in the string while parsing in js file
+                {
+                    if(curlybrackets==true)
+                    {
+                        curlybrackets=false;
+                    }
+                    else
+                    {
+                        curlybrackets=true;
+                    }
+                }
+                fputc(ch,copy);                                 // printing all the chars directly to the file
+                str[l] = ch;                                    // storing the char in temporary string for checks
                 l++;
             }
         }

@@ -1,4 +1,14 @@
-let a = "helo";
+const http = require('http');
 
-var b = "Hello WOrld this is gaurav";
-console.log(a + b);
+const hostname = '127.0.0.1';
+const port = 3000;
+
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hello, World!\n');
+});
+
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});
