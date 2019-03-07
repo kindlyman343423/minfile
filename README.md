@@ -20,9 +20,9 @@ It is a **cli application** to **generate min file** size easily. For example **
 * css
 * scss
 * json
-* html (unstable)
-* js
-* c (partially supported)
+* html (alpha)
+* js (alpha)
+* c (alpha)
 * c# (partially supported)
 * c++ (partially supported)
 * java (partially supported)
