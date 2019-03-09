@@ -53,7 +53,7 @@ int main(int argc,char* argv[])
         }
         argc++;
         // printf("arguments: %d\n",argc);
-        argv = (char**)malloc(sizeof(char *)*argc);                  // storing the arguments
+        argv = (char**)malloc(sizeof(char *)*argc);                         // storing the arguments
 
         /**
          * RESETTING VARAIBLES

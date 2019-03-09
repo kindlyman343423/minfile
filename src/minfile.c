@@ -183,8 +183,9 @@ void minfile(char* argv)
         bool lessgreater=false;                                                         // boolean for html > <
         bool cart = false;                                                              // boolean for ` for js
         bool curlybrackets = false;                                                     // boolean for { } for js
-        bool chashtag = false;                                                          // boolean for #include for c
-        bool cdefine = false;                                                           // boolean for #define for c
+        bool chashtag = false;                                                          // boolean for #include for c,cpp
+        bool cdefine = false;                                                           // boolean for #define for c,cpp
+        bool cppclass = false;                                                          // boolean for class
 
         while(!feof(ptr))                                                               // writing the file
         {
@@ -240,6 +241,26 @@ void minfile(char* argv)
                             fputc(ch,copy);                                             // printing the space char when reserved word found in c
                         }
                     }
+                    else if(cpp)                                                        // if cpp file found
+                    {
+                        if(strcmp(str,"#define")==0)                                    // if #define string is finded
+                        {
+                            cdefine=true;
+                        }
+                        else if(ch=='\n')                                               // if line end found
+                        {
+                            cdefine=false;
+                            if(chashtag)                                                // printing \n when header file line is there in c
+                            {
+                                fputc(ch,copy);
+                                chashtag = false;
+                            }
+                        }
+                        if((reservedCPP(str) || dcomma || cdefine) && ch==' ')          // if cpp reserved words found or double commas
+                        {
+                            fputc(ch,copy);                                             // printing the space char when reserved word found in c
+                        }
+                    }
                     else if(ch==' ')                                                    // for other file format
                     {
                         fputc(ch,copy);
@@ -258,7 +279,7 @@ void minfile(char* argv)
                  * MAINTAINING FLAGS
                  * for handling the flags for exceptions in file extension
                  **/
-                if(ch=='\"' && (json || html || js || c))                               // if double commas come in json,html,js,c
+                if(ch=='\"' && (json || html || js || c || cpp))                        // if double commas come in json,html,js,c
                 {
                     if(dcomma==true)                                                    // if string is ending then do it false
                     {
@@ -302,7 +323,7 @@ void minfile(char* argv)
                         curlybrackets=true;
                     }
                 }
-                else if(str[0]=='#' && c)                                               // if # found in the c file
+                else if(str[0]=='#' && (c || cpp))                                      // if # found in the c file
                 {
                     if(chashtag == false)
                     {
