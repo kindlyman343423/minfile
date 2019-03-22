@@ -25,7 +25,6 @@ bool wildcard(char ch)
         case '\'':
         case ',':
         case '-':
-        case '/':
         case ':':
         case ';':
         case '<':
