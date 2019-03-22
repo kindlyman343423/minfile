@@ -28,7 +28,6 @@ void minfile(char* argv)
 
         /**
          * setting the boolean according to file extensions
-         * checking in better way using jumping table
          **/
         int len = strlen(argv);
         
@@ -116,6 +115,9 @@ void minfile(char* argv)
         // printHashTable();
         // exit(1);
         
+        /**
+         * CHECKING THE FILE NAME IS VALID OR NOT
+         **/
         FILE *ptr;
         ptr = fopen(argv,"r");                                                          // reading file for conversion
         if(ptr==NULL)
@@ -123,15 +125,16 @@ void minfile(char* argv)
             printf("ERROR: No file found\n");                                           // if file not found then exit the program
             exit(1);
         }
+
         /**
-         * create new file extension
+         * Create new file extension with min in it
          *
-         * test.css     ->  test.min.css
-         * test.scss    ->  test.min.scss
-         * test.json    ->  test.min.json 
-         * test.html    ->  test.min.html
-         * test.js      ->  test.min.js
-         * test.c       ->  test.min.c
+         * test.css     ->  test.min.css        -----
+         * test.scss    ->  test.min.scss       -----
+         * test.json    ->  test.min.json       -----
+         * test.html    ->  test.min.html       --
+         * test.js      ->  test.min.js         -----
+         * test.c       ->  test.min.c          ----
          * test.cpp     ->  test.min.cpp
          * test.java    ->  test.min.java
          * test.cs      ->  test.min.cs
@@ -169,7 +172,10 @@ void minfile(char* argv)
             j++;
         }
         newfile[j]='\0';
-            
+        
+        /**
+         * Writing the new file i.e is minfile i.e main task
+         **/
         FILE *copy;                                                                     // file pointer for copying files
         copy = fopen(newfile,"w");                                                      // open file for writing
         bool flag=false;                                                                // boolean for parsing
@@ -177,7 +183,7 @@ void minfile(char* argv)
         int l=0;                                                                        // iterator for string storage
         
         /**
-         * FLAGS for exceptional behaviour
+         * Initialize FLAGS for exceptional behaviour
          **/
         bool dcomma=false;                                                              // boolean for double commas
         bool lessgreater=false;                                                         // boolean for html > <
@@ -190,13 +196,14 @@ void minfile(char* argv)
         while(!feof(ptr))                                                               // writing the file
         {
             char ch = fgetc(ptr);
-            if(ch==' ' || ch=='\n' || ch=='\t' || ch==EOF)
+            if(ch==' ' || ch=='\n' || ch=='\t' || ch==EOF)                              // if space new line or tab found
             {
                 if(flag)                                                                // when we go from word to space
                 {
                     str[l]='\0';
                     if(css || scss || json)                                             // when css,scss,json file found
                     {
+                        fprintf(copy,"%s",str);                                         // print the string formed
                         //compress all chars
                         if(dcomma==true && json && ch==' ')                             // comma mechanism for json
                         {
@@ -205,6 +212,7 @@ void minfile(char* argv)
                     }
                     else if(html)                                                       // print space only for html files
                     {
+                        fprintf(copy,"%s",str);                                         // print the string formed
                         if((reservedHTML(str) || !lessgreater || dcomma) && ch==' ')
                         {
                             fputc(ch,copy);                                             // if html tag found then there should be 1 space    
@@ -212,6 +220,7 @@ void minfile(char* argv)
                     }
                     else if(js)                                                         // if js file found
                     {
+                        fprintf(copy,"%s",str);                                         // print the string formed
                         if(ch=='\n' && str[l-1]!=';' && !curlybrackets)
                         {
                             fputc(';',copy);
@@ -223,6 +232,7 @@ void minfile(char* argv)
                     }
                     else if(c)                                                          // if c file found
                     {
+                        fprintf(copy,"%s",str);                                         // print the string formed
                         if(strcmp(str,"#define")==0)                                    // if #define string is finded
                         {
                             cdefine=true;
@@ -243,6 +253,7 @@ void minfile(char* argv)
                     }
                     else if(cpp)                                                        // if cpp file found
                     {
+                        fprintf(copy,"%s",str);                                         // print the string formed
                         if(strcmp(str,"#define")==0)                                    // if #define string is finded
                         {
                             cdefine=true;
@@ -269,14 +280,14 @@ void minfile(char* argv)
                     flag=false;
                 }
             }
-            else                                                                        // if other char found
+            else                                                                        // if chars found
             {
                 if(flag==false)
                 {
                     flag=true;
                 }
                 /**
-                 * MAINTAINING FLAGS
+                 * MAINTAINING FLAGS BY CHECKING CHAR BY CHAR
                  * for handling the flags for exceptions in file extension
                  **/
                 if(ch=='\"' && (json || html || js || c || cpp))                        // if double commas come in json,html,js,c
@@ -323,14 +334,14 @@ void minfile(char* argv)
                         curlybrackets=true;
                     }
                 }
-                else if(str[0]=='#' && (c || cpp))                                      // if # found in the c file
+                else if(str[0]=='#' && (c || cpp))                                      // if # found in the c and cpp file
                 {
                     if(chashtag == false)
                     {
                         chashtag = true;
                     }
                 }
-                fputc(ch,copy);                                                         // printing all the chars directly to the file
+                // fputc(ch,copy);                                                         // printing all the chars directly to the file
                 str[l] = ch;                                                            // storing the char in temporary string for checks
                 l++;
             }

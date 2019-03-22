@@ -13,6 +13,8 @@ if(($opt -eq 'Y') -OR ($opt -eq 'y'))
 $filename = Read-Host "Enter filename for test output"      # getting filename from user
 ./minfile $filename                                         # executing the file
 
+Move-Item */*.min.* .
+
 "Min files are auto-generated in mfiles/test directory"
 Copy-Item *.min.* ../mfiles/tested                          # move min files to mfiles/test directory for safe keeping
 

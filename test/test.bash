@@ -16,5 +16,7 @@ echo "Enter filename for test output"
 read filename                           # getting filename from user
 ./minfile $filename                     # executing the file
 
+mv */*.min.* .
+
 echo "Min files are auto-generated in mfiles/test directory"
 mv *.min.* ../mfiles/tested              # move min files to mfiles/test directory for safe keeping
